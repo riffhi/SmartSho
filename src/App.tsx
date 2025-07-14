@@ -1,4 +1,6 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import Header from './components/Header';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
@@ -17,9 +19,34 @@ function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false); // ✅ Chatbot sidebar
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showGreenBharat, setShowGreenBharat] = useState(false);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // 🚀 Scroll to Hero section if query param is set
+ useEffect(() => {
+  const params = new URLSearchParams(location.search);
+  const shouldScroll = params.get('scrollTo') === 'hero';
+
+  if (shouldScroll) {
+    // Reset state before scrolling
+    setSelectedCategory(null);
+    setShowGreenBharat(false);
+
+    // Delay scroll slightly so Hero renders
+    setTimeout(() => {
+      const hero = document.getElementById('hero');
+      if (hero) {
+        hero.scrollIntoView({ behavior: 'smooth' });
+        navigate('/', { replace: true }); // clean URL
+      }
+    }, 100); // wait for DOM update
+  }
+}, [location, navigate]);
+
 
   const filteredProducts = useMemo(() => {
     if (!selectedCategory) return products;
@@ -41,10 +68,12 @@ function App() {
   };
 
   const handleCartClick = () => setIsCartOpen(true);
+
   const handleGreenBharatClick = () => {
     setShowGreenBharat(true);
     setSelectedCategory(null);
   };
+
   const resetCategory = () => {
     setSelectedCategory(null);
     setShowGreenBharat(false);
@@ -57,7 +86,7 @@ function App() {
           onCartClick={handleCartClick} 
           onCategoryClick={handleCategoryClick}
           onGreenBharatClick={handleGreenBharatClick}
-          onChatClick={() => setIsChatOpen(true)} // ✅ Added this
+          onChatClick={() => setIsChatOpen(true)}
         />
         
         {!selectedCategory && !showGreenBharat && (
@@ -135,7 +164,7 @@ function App() {
           onClose={() => setIsCartOpen(false)}
         />
 
-        <ChatbotSidebar // ✅ Chatbot Sidebar
+        <ChatbotSidebar
           isOpen={isChatOpen}
           onClose={() => setIsChatOpen(false)}
         />

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, ShoppingCart, User, Menu, X, Leaf } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   onCartClick: () => void;
@@ -13,12 +14,18 @@ const Header: React.FC<HeaderProps> = ({ onCartClick, onCategoryClick, onGreenBh
   const { state } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate(); // ✅ for redirect
 
   const categories = [
     'Women Ethnic', 'Women Western', 'Men', 'Kids', 
     'Home & Kitchen', 'Beauty & Health', 'Jewellery & Accessories', 
     'Bags & Footwear', 'Electronics', 'Sports & Fitness'
   ];
+
+  // ✅ Scroll to Hero (triggered in App.tsx via URL param)
+  const handleLogoClick = () => {
+    navigate('/?scrollTo=hero');
+  };
 
   return (
     <header className="bg-white shadow-md sticky top-0 z-50">
@@ -40,8 +47,8 @@ const Header: React.FC<HeaderProps> = ({ onCartClick, onCategoryClick, onGreenBh
       {/* Main Header */}
       <div className="max-w-7xl mx-auto px-4 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center">
+          {/* ✅ Logo */}
+          <div onClick={handleLogoClick} className="flex items-center cursor-pointer">
             <h1 className="text-2xl font-bold text-pink-600 mr-8">meesho</h1>
           </div>
 
@@ -88,17 +95,16 @@ const Header: React.FC<HeaderProps> = ({ onCartClick, onCategoryClick, onGreenBh
             </button>
 
             <button 
-  onClick={onChatClick}
-  className="flex items-center space-x-2 text-gray-700 hover:text-pink-600"
->
-  <img 
-    src="/chatbot.png" // ✅ Replace with your image file name
-    alt="Chat Icon"
-    className="w-10 h-8"
-  />
-  <span className="hidden md:block">AI Agent</span>
-</button>
-
+              onClick={onChatClick}
+              className="flex items-center space-x-2 text-gray-700 hover:text-pink-600"
+            >
+              <img 
+                src="/chatbot.png"
+                alt="Chat Icon"
+                className="w-10 h-8"
+              />
+              <span className="hidden md:block">AI Agent</span>
+            </button>
 
             <button 
               className="md:hidden"
