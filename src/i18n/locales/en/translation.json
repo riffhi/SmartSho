@@ -1,0 +1,56 @@
+{
+  "topBar": {
+    "easyReturn": "7 Days Easy Return",
+    "cashOnDelivery": "Cash on Delivery",
+    "lowestPrices": "Lowest Prices",
+    "becomeSupplier": "Become a Supplier",
+    "investorRelations": "Investor Relations"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "cart": "Cart",
+    "profile": "Profile",
+    "greenBharat": "GreenBharat",
+    "aiAgent": "AI Agent"
+  },
+  "search": {
+    "placeholder": "Try Saree, Kurti or Search by Product Code"
+  },
+  "categories": {
+    "womenethnic": "Women Ethnic",
+    "womenwestern": "Women Western",
+    "men": "Men",
+    "kids": "Kids",
+    "home&kitchen": "Home & Kitchen",
+    "beauty&health": "Beauty & Health",
+    "jewellery&accessories": "Jewellery & Accessories",
+    "bags&footwear": "Bags & Footwear",
+    "electronics": "Electronics",
+    "sports&fitness": "Sports & Fitness"
+  },
+  "hero": {
+    "title": "Welcome to Our Store",
+    "subtitle": "Discover amazing products at great prices"
+  },
+  "product": {
+    "addToCart": "Add to Cart",
+    "price": "Price",
+    "viewDetails": "View Details",
+    "outOfStock": "Out of Stock"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "checkout": "Checkout"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "topBar": {
+    "easyReturn": "7 Días Devolución Fácil",
+    "cashOnDelivery": "Pago Contra Entrega",
+    "lowestPrices": "Precios Más Bajos",
+    "becomeSupplier": "Convertirse en Proveedor",
+    "investorRelations": "Relaciones con Inversionistas"
+  },
+  "nav": {
+    "home": "Inicio",
+    "products": "Productos",
+    "about": "Acerca de",
+    "contact": "Contacto",
+    "cart": "Carrito",
+    "profile": "Perfil",
+    "greenBharat": "GreenBharat",
+    "aiAgent": "Agente IA"
+  },
+  "search": {
+    "placeholder": "Prueba Saree, Kurti o Busca por Código de Producto"
+  },
+  "categories": {
+    "womenethnic": "Étnico Femenino",
+    "womenwestern": "Occidental Femenino",
+    "men": "Hombres",
+    "kids": "Niños",
+    "home&kitchen": "Hogar y Cocina",
+    "beauty&health": "Belleza y Salud",
+    "jewellery&accessories": "Joyería y Accesorios",
+    "bags&footwear": "Bolsos y Calzado",
+    "electronics": "Electrónicos",
+    "sports&fitness": "Deportes y Fitness"
+  },
+  "hero": {
+    "title": "Bienvenido a Nuestra Tienda",
+    "subtitle": "Descubre productos increíbles a precios excelentes"
+  },
+  "product": {
+    "addToCart": "Agregar al Carrito",
+    "price": "Precio",
+    "viewDetails": "Ver Detalles",
+    "outOfStock": "Agotado"
+  },
+  "cart": {
+    "title": "Carrito de Compras",
+    "empty": "Tu carrito está vacío",
+    "total": "Total",
+    "checkout": "Finalizar Compra"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "save": "Guardar",
+    "cancel": "Cancelar"
+  }
+}
