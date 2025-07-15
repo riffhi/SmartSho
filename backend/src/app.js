@@ -1,7 +1,8 @@
 // smartsho-backend/src/app.js
 // Main Express application setup
 const express = require('express');
-const cors = require('cors'); // For handling Cross-Origin Resource Sharing
+const cors = require('cors'); 
+// For handling Cross-Origin Resource Sharing
 const errorHandler = require('./middleware/errorHandler'); // Custom error handling middleware
 
 // Import routes
