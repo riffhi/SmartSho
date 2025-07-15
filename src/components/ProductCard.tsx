@@ -55,15 +55,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) =>
         <h3 className="font-medium text-gray-800 mb-2 line-clamp-2 group-hover:text-pink-600 transition-colors">
           {product.name}
         </h3>
-        
-        <div className="flex items-center mb-2">
+
+        {/* Ratings + Sustainability */}
+        <div className="flex flex-col gap-2 mb-2">
+          {/* Ratings */}
           <div className="flex items-center">
             <Star className="w-4 h-4 text-yellow-400 fill-current" />
             <span className="text-sm text-gray-600 ml-1">{product.rating}</span>
             <span className="text-sm text-gray-400 ml-1">({product.reviews})</span>
           </div>
+
+          {/* Sustainability Score */}
+          {product.sustainabilityScore !== undefined && (
+            <div>
+              <span
+                className={`inline-block px-2 py-1 rounded-full text-white text-xs font-semibold ${
+                  product.sustainabilityScore >= 8
+                    ? 'bg-green-600'
+                    : product.sustainabilityScore >= 5
+                    ? 'bg-yellow-500'
+                    : 'bg-red-500'
+                }`}
+              >
+                Sustainability Score: {product.sustainabilityScore}/10
+              </span>
+            </div>
+          )}
         </div>
-        
+
+        {/* Price */}
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
             <span className="text-lg font-bold text-gray-800">₹{product.price}</span>
@@ -72,14 +92,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) =>
             )}
           </div>
         </div>
-        
+
+        {/* Delivery */}
         <div className="text-xs text-gray-500 mb-3">
           <div>{t('product.delivery', { days: product.delivery.days })}</div>
           {product.delivery.cashOnDelivery && (
             <div className="text-green-600">{t('product.cod')}</div>
           )}
         </div>
-        
+
+        {/* Add to Cart */}
         <button
           onClick={handleAddToCart}
           disabled={!product.inStock}

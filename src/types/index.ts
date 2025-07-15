@@ -13,6 +13,7 @@ export interface Product {
   description: string;
   features: string[];
   inStock: boolean;
+  sustainabilityScore: number;
   seller: {
     name: string;
     rating: number;
@@ -25,6 +26,7 @@ export interface Product {
   };
   isEcoFriendly?: boolean;
   carbonReduction?: number;
+  
 }
 
 export interface CartItem {
