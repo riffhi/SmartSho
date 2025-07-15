@@ -1,0 +1,10 @@
+{
+  "product": {
+    "addToCart": "In den Warenkorb",
+    "price": "Preis"
+  },
+  "header": {
+    "home": "Startseite",
+    "categories": "Kategorien"
+  }
+}

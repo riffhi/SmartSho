@@ -1,0 +1,8 @@
+{
+  "product": {
+    "addToCart": "Ajouter au panier",
+    "outOfStock": "Rupture de stock",
+    "cod": "Paiement à la livraison disponible",
+    "delivery": "Livraison gratuite en {{days}} jours"
+  }
+}

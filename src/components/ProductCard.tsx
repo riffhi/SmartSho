@@ -2,6 +2,7 @@ import React from 'react';
 import { Star, Heart, ShoppingCart } from 'lucide-react';
 import { Product } from '../types';
 import { useCart } from '../context/CartContext';
+import { useTranslation } from 'react-i18next';
 
 interface ProductCardProps {
   product: Product;
@@ -10,6 +11,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) => {
   const { dispatch } = useCart();
+  const { t } = useTranslation();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -44,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) =>
         
         {!product.inStock && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <span className="text-white font-semibold">Out of Stock</span>
+            <span className="text-white font-semibold">{t('product.outOfStock')}</span>
           </div>
         )}
       </div>
@@ -93,9 +95,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) =>
 
         {/* Delivery */}
         <div className="text-xs text-gray-500 mb-3">
-          <div>Free delivery in {product.delivery.days} days</div>
+          <div>{t('product.delivery', { days: product.delivery.days })}</div>
           {product.delivery.cashOnDelivery && (
-            <div className="text-green-600">Cash on Delivery available</div>
+            <div className="text-green-600">{t('product.cod')}</div>
           )}
         </div>
 
@@ -106,7 +108,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onProductClick }) =>
           className="w-full bg-pink-500 text-white py-2 rounded-lg hover:bg-pink-600 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
         >
           <ShoppingCart className="w-4 h-4" />
-          <span>{product.inStock ? 'Add to Cart' : 'Out of Stock'}</span>
+          <span>{product.inStock ? t('product.addToCart') : t('product.outOfStock')}</span>
         </button>
       </div>
     </div>

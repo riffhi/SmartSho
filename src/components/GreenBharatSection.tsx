@@ -1,5 +1,6 @@
 import React from 'react';
-import { Leaf } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Leaf, Coins } from 'lucide-react';
 import { Product } from '../types';
 import EcoProductCard from './EcoProductCard';
 
@@ -9,10 +10,12 @@ interface GreenBharatSectionProps {
 }
 
 const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onProductClick }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-green-100 to-green-50 py-16">
+      <section className="bg-gradient-to-r from-green-100 to-green-50 py-16 relative">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <div className="flex items-center justify-center mb-6">
@@ -29,13 +32,24 @@ const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onPro
                 </div>
               </div>
             </div>
-            
+
             <div className="max-w-4xl mx-auto">
               <p className="text-xl text-gray-600 mb-8">
                 Products displaying an eco-friendly badge are certified as environmentally friendly, 
                 with various certificates tailored to specific product categories. Learn More in Educational Section
               </p>
             </div>
+          </div>
+
+          {/* Coin Button */}
+          <div className="absolute top-6 right-6">
+            <button
+              onClick={() => navigate('/rewards')}
+              className="flex items-center space-x-2 bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-full shadow-md transition-colors"
+            >
+              <Coins className="w-5 h-5" />
+              <span className="font-semibold">GreenBits: 142</span>
+            </button>
           </div>
         </div>
       </section>
@@ -52,7 +66,7 @@ const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onPro
               />
             ))}
           </div>
-          
+
           {products.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">No eco-friendly products found</p>
@@ -66,7 +80,7 @@ const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onPro
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-gray-800 mb-8">Why Choose Eco-Friendly Products?</h2>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -75,7 +89,7 @@ const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onPro
                 <h3 className="text-xl font-semibold mb-3">Reduce Carbon Footprint</h3>
                 <p className="text-gray-600">Our eco-friendly products help reduce carbon emissions by up to 80% compared to traditional alternatives.</p>
               </div>
-              
+
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <div className="w-8 h-8 bg-blue-600 rounded-full"></div>
@@ -83,7 +97,7 @@ const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onPro
                 <h3 className="text-xl font-semibold mb-3">Sustainable Materials</h3>
                 <p className="text-gray-600">Made from renewable resources like bamboo, jute, and recycled materials for a sustainable future.</p>
               </div>
-              
+
               <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <div className="w-8 h-8 bg-purple-600 rounded-full"></div>
