@@ -13,7 +13,7 @@ const SellerChatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m here to help you become a successful Meesho seller. How can I assist you today?',
+      text: "Hello! I'm here to help you become a successful Meesho seller. How can I assist you today?",
       sender: 'bot',
       timestamp: new Date()
     }
@@ -29,34 +29,7 @@ const SellerChatbot: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const predefinedResponses: { [key: string]: string } = {
-    'hello': 'Hello! Welcome to Meesho seller support. How can I help you start your selling journey?',
-    'hi': 'Hi there! I\'m here to help you with all your seller queries. What would you like to know?',
-    'commission': 'Great question! Meesho charges 0% commission on most categories. You only pay for shipping and packaging.',
-    'how to start': 'Starting is easy! 1) Register as a seller 2) Upload your products 3) Start receiving orders 4) Ship and earn money!',
-    'registration': 'To register: Click "Start Selling" → Fill basic details → Upload documents → Start listing products. No registration fee!',
-    'documents': 'You need: PAN card, Bank account details, GSTIN (optional), and address proof. That\'s it!',
-    'payment': 'Payments are processed within 7 days of order delivery. Money is directly transferred to your bank account.',
-    'shipping': 'We provide shipping partners or you can use your own. Shipping rates start from ₹25 across India.',
-    'support': 'We provide 24/7 seller support, training videos, and dedicated account managers for high-volume sellers.',
-    'categories': 'You can sell in 600+ categories including Fashion, Home & Kitchen, Electronics, Beauty, and more!',
-    'gst': 'GST is not mandatory to start selling. You can sell without GSTIN and add it later when your business grows.',
-    'returns': 'Returns are handled by Meesho. We have a 7-day return policy and handle all return logistics for you.'
-  };
-
-  const getBotResponse = (userMessage: string): string => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    for (const [key, response] of Object.entries(predefinedResponses)) {
-      if (lowerMessage.includes(key)) {
-        return response;
-      }
-    }
-    
-    return 'I understand you\'re asking about selling on Meesho. For specific queries, please contact our seller support team at seller-support@meesho.com or call 080-61611000. Is there anything else I can help you with?';
-  };
-
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
     const userMessage: Message = {
@@ -67,19 +40,33 @@ const SellerChatbot: React.FC = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    setInputMessage('');
 
-    // Simulate bot response delay
-    setTimeout(() => {
-      const botResponse: Message = {
+    try {
+      const res = await fetch('http://localhost:5000/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: inputMessage })
+      });
+
+      const data = await res.json();
+      const botReply: Message = {
         id: (Date.now() + 1).toString(),
-        text: getBotResponse(inputMessage),
+        text: data.reply || '⚠️ No response received from server.',
         sender: 'bot',
         timestamp: new Date()
       };
-      setMessages(prev => [...prev, botResponse]);
-    }, 1000);
 
-    setInputMessage('');
+      setMessages(prev => [...prev, botReply]);
+    } catch (err) {
+      const botError: Message = {
+        id: (Date.now() + 2).toString(),
+        text: '❌ Failed to reach the server. Please try again later.',
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, botError]);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -89,10 +76,10 @@ const SellerChatbot: React.FC = () => {
   };
 
   const quickQuestions = [
-    'How to start selling?',
-    'What documents needed?',
-    'Commission rates?',
-    'Payment process?'
+    'Should I restock cotton kurtas?',
+    'How is my sales trend?',
+    'Which product has low inventory?',
+    'Which item is my top seller?'
   ];
 
   return (
@@ -150,7 +137,7 @@ const SellerChatbot: React.FC = () => {
           {/* Quick Questions */}
           {messages.length <= 1 && (
             <div className="px-4 pb-2">
-              <p className="text-xs text-gray-500 mb-2">Quick questions:</p>
+              <p className="text-xs text-gray-500 mb-2">Try asking:</p>
               <div className="flex flex-wrap gap-1">
                 {quickQuestions.map((question, index) => (
                   <button

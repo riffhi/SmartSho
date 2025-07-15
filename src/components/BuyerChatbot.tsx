@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Bot, User } from 'lucide-react';
+import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
+import { getBuyerBotResponse } from '../utils/getBuyerBotResponse';
 
 interface Message {
   id: string;
@@ -13,12 +14,13 @@ const BuyerChatbot: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: 'Hello! I\'m here to help you with your shopping on Meesho. How can I assist you today?',
+      text: "Hello! I'm here to help you with your shopping on Meesho. How can I assist you today?",
       sender: 'bot',
       timestamp: new Date()
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -29,37 +31,7 @@ const BuyerChatbot: React.FC = () => {
     scrollToBottom();
   }, [messages]);
 
-  const predefinedResponses: { [key: string]: string } = {
-    'hello': 'Hello! Welcome to Meesho! I\'m here to help you with all your shopping needs. What can I help you find today?',
-    'hi': 'Hi there! I\'m your shopping assistant. How can I help you today?',
-    'order': 'For order related queries: You can track your order in "My Orders" section. Orders typically arrive within 7-10 days with free delivery!',
-    'track': 'To track your order: Go to "My Orders" → Select your order → View tracking details. You\'ll get SMS updates too!',
-    'return': 'Returns are easy! You have 7 days to return any item. Go to "My Orders" → Select item → "Return" → Choose reason. Free pickup available!',
-    'refund': 'Refunds are processed within 7-10 business days after we receive your returned item. Money goes back to your original payment method.',
-    'payment': 'We accept: Credit/Debit cards, Net Banking, UPI, Wallets, and Cash on Delivery. All payments are 100% secure!',
-    'cod': 'Cash on Delivery is available for most products. Look for "COD Available" on product pages. No extra charges!',
-    'delivery': 'We offer FREE delivery on all orders! Most items are delivered within 7-10 days across India.',
-    'size': 'Size issues? Check our size guide on product pages. If it doesn\'t fit, easy returns within 7 days!',
-    'quality': 'All products are quality checked. If you\'re not satisfied, return within 7 days for full refund. Customer satisfaction guaranteed!',
-    'discount': 'Great deals daily! Check our homepage for latest offers, flash sales, and seasonal discounts. Save up to 80%!',
-    'account': 'Account issues? You can reset password, update profile, manage addresses in "My Account" section.',
-    'categories': 'Shop from 600+ categories: Fashion, Home & Kitchen, Electronics, Beauty, Kids, and more!',
-    'support': 'Need more help? Call our 24/7 customer care: 080-61611000 or email: support@meesho.com'
-  };
-
-  const getBotResponse = (userMessage: string): string => {
-    const lowerMessage = userMessage.toLowerCase();
-    
-    for (const [key, response] of Object.entries(predefinedResponses)) {
-      if (lowerMessage.includes(key)) {
-        return response;
-      }
-    }
-    
-    return 'I understand you need help with shopping on Meesho. For specific queries, please contact our customer support at support@meesho.com or call 080-61611000. Is there anything else I can help you with?';
-  };
-
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
     const userMessage: Message = {
@@ -70,25 +42,35 @@ const BuyerChatbot: React.FC = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    setInputMessage('');
+    setIsTyping(true);
 
-    // Simulate bot response delay
-    setTimeout(() => {
+    try {
+      const botText = await getBuyerBotResponse(userMessage.text);
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
-        text: getBotResponse(inputMessage),
+        text: botText,
         sender: 'bot',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, botResponse]);
-    }, 1000);
-
-    setInputMessage('');
+    } catch (error) {
+      setMessages(prev => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          text: 'Sorry! I could not fetch a response right now.',
+          sender: 'bot',
+          timestamp: new Date()
+        }
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSendMessage();
-    }
+    if (e.key === 'Enter') handleSendMessage();
   };
 
   const quickQuestions = [
@@ -147,6 +129,14 @@ const BuyerChatbot: React.FC = () => {
                 </div>
               </div>
             ))}
+            {isTyping && (
+              <div className="flex justify-start">
+                <div className="bg-gray-100 text-gray-800 max-w-[80%] p-3 rounded-lg flex items-center space-x-2">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span className="text-sm">Typing...</span>
+                </div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
 
@@ -175,13 +165,16 @@ const BuyerChatbot: React.FC = () => {
                 type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyPress}
                 placeholder="Type your message..."
                 className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <button
                 onClick={handleSendMessage}
-                className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors"
+                disabled={isTyping}
+                className={`bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition-colors ${
+                  isTyping ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
               >
                 <Send className="w-4 h-4" />
               </button>
