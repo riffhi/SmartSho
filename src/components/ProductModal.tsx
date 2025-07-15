@@ -26,10 +26,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
       <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
           <h2 className="text-xl font-semibold">Product Details</h2>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full"
-          >
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -45,7 +42,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
                   className="w-full h-96 object-cover rounded-lg"
                 />
               </div>
-              
+
               {product.images.length > 1 && (
                 <div className="flex space-x-2">
                   {product.images.map((image, index) => (
@@ -71,12 +68,31 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
             <div className="space-y-6">
               <div>
                 <h1 className="text-2xl font-bold text-gray-800 mb-2">{product.name}</h1>
-                <div className="flex items-center space-x-4 mb-4">
+
+                <div className="flex flex-col gap-2 mb-4">
+                  {/* Ratings */}
                   <div className="flex items-center">
                     <Star className="w-5 h-5 text-yellow-400 fill-current" />
                     <span className="ml-1 font-medium">{product.rating}</span>
                     <span className="ml-1 text-gray-500">({product.reviews} reviews)</span>
                   </div>
+
+                  {/* Sustainability Score */}
+                  {product.sustainabilityScore !== undefined && (
+                    <div>
+                      <span
+                        className={`inline-block px-3 py-1 rounded-full text-white text-xs font-semibold ${
+                          product.sustainabilityScore >= 8
+                            ? 'bg-green-600'
+                            : product.sustainabilityScore >= 5
+                            ? 'bg-yellow-500'
+                            : 'bg-red-500'
+                        }`}
+                      >
+                        Sustainability Score: {product.sustainabilityScore}/10
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -164,7 +180,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, isOpen, onClose })
                   <ShoppingCart className="w-5 h-5" />
                   <span>Add to Cart</span>
                 </button>
-                
+
                 <button className="p-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                   <Heart className="w-5 h-5" />
                 </button>

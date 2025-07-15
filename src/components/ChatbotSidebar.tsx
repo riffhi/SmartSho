@@ -1,21 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface ChatbotSidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+type Message = {
+  sender: 'user' | 'bot';
+  text: string;
+};
+
 const ChatbotSidebar: React.FC<ChatbotSidebarProps> = ({ isOpen, onClose }) => {
-  const [messages, setMessages] = useState<{ sender: 'user' | 'bot'; text: string }[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollToBottom = () => {
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSend = async () => {
     if (!input.trim()) return;
 
-    const userMessage = { sender: 'user' as const, text: input };
+    const userMessage: Message = { sender: 'user', text: input };
     setMessages(prev => [...prev, userMessage]);
-
     setInput('');
+    setLoading(true);
 
     try {
       const response = await fetch('http://localhost:5000/chat', {
@@ -25,10 +40,19 @@ const ChatbotSidebar: React.FC<ChatbotSidebarProps> = ({ isOpen, onClose }) => {
       });
 
       const data = await response.json();
-      const botMessage = { sender: 'bot' as const, text: data.reply };
+      const botMessage: Message = { sender: 'bot', text: data.reply };
       setMessages(prev => [...prev, botMessage]);
     } catch (error) {
-      setMessages(prev => [...prev, { sender: 'bot' as const, text: 'Error contacting AI agent.' }]);
+      setMessages(prev => [...prev, { sender: 'bot', text: '❌ Unable to reach AI server.' }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleSend();
     }
   };
 
@@ -38,35 +62,45 @@ const ChatbotSidebar: React.FC<ChatbotSidebarProps> = ({ isOpen, onClose }) => {
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
     >
-      <div className="flex justify-between items-center px-4 py-3 border-b">
-        <h2 className="text-xl font-bold">SellerBot</h2>
+      {/* Header */}
+      <div className="flex justify-between items-center px-4 py-3 border-b bg-pink-50">
+        <h2 className="text-xl font-bold text-pink-700">SellerBot</h2>
         <button onClick={onClose} className="text-pink-600 font-bold text-lg">×</button>
       </div>
 
+      {/* Messages */}
       <div className="flex flex-col h-[calc(100%-120px)] overflow-y-auto px-4 py-2 space-y-2">
         {messages.map((msg, idx) => (
           <div
             key={idx}
             className={`p-2 rounded-lg text-sm max-w-xs ${
-              msg.sender === 'user' ? 'bg-pink-100 self-end' : 'bg-gray-200 self-start'
+              msg.sender === 'user'
+                ? 'bg-pink-100 self-end text-right'
+                : 'bg-gray-200 self-start text-left'
             }`}
           >
             {msg.text}
           </div>
         ))}
+        {loading && (
+          <div className="text-sm text-gray-500 self-start">Thinking...</div>
+        )}
+        <div ref={bottomRef} />
       </div>
 
+      {/* Input */}
       <div className="p-4 border-t flex space-x-2">
         <input
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Ask about stock..."
-          className="flex-1 border px-3 py-2 rounded-md text-sm"
+          onKeyDown={handleKeyDown}
+          placeholder="Ask about a product..."
+          className="flex-1 border px-3 py-2 rounded-md text-sm outline-none focus:ring-2 focus:ring-pink-300"
         />
         <button
           onClick={handleSend}
-          className="bg-pink-500 text-white px-4 py-2 rounded-md text-sm"
+          className="bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-md text-sm"
         >
           Send
         </button>

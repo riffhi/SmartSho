@@ -1,5 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import CacheManager from './components/CacheManager';
 
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -58,6 +59,9 @@ function App() {
     setIsProductModalOpen(true);
   };
 
+  <div className="cache-manager-section">
+        <CacheManager />
+  </div>
   const handleCategoryClick = (category: string) => {
     setSelectedCategory(category);
     setShowGreenBharat(false);
