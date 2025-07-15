@@ -1,16 +1,17 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Leaf, Coins } from 'lucide-react';
 import { Product } from '../types';
 import EcoProductCard from './EcoProductCard';
 
+
 interface GreenBharatSectionProps {
   products: Product[];
   onProductClick: (product: Product) => void;
+  onGreenBitsClick: () => void;
 }
 
-const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onProductClick }) => {
-  const navigate = useNavigate();
+const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onProductClick, onGreenBitsClick }) => {
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
@@ -43,13 +44,13 @@ const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onPro
 
           {/* Coin Button */}
           <div className="absolute top-6 right-6">
-            <button
-              onClick={() => navigate('/rewards')}
-              className="flex items-center space-x-2 bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-full shadow-md transition-colors"
-            >
-              <Coins className="w-5 h-5" />
-              <span className="font-semibold">GreenBits: 142</span>
-            </button>
+           <button
+          onClick={onGreenBitsClick}
+           className="flex items-center space-x-2 bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-full shadow-md transition-colors"
+>
+            <Coins className="w-5 h-5" />
+            <span className="font-semibold">GreenBits: 142</span>
+</button>
           </div>
         </div>
       </section>
