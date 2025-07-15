@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-
+import React, { useState, useMemo, useEffect } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import CacheManager from './components/CacheManager';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
@@ -16,7 +16,7 @@ import SupplierPage from './components/SupplierPage';
 import BuyerChatbot from './components/BuyerChatbot';
 import SellerLogin from './components/SellerLogin';
 import { Product } from './types';
-import CacheManager from './components/CacheManager';
+// import CacheManager from './components/CacheManager';
 
 // ✅ Dummy RewardsPage component
 const RewardsPage: React.FC = () => (
