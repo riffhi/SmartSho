@@ -1,33 +1,27 @@
 // smartsho-backend/src/app.js
-// Main Express application setup
-const express = require('express');
-const cors = require('cors'); 
-// For handling Cross-Origin Resource Sharing
-const errorHandler = require('./middleware/errorHandler'); // Custom error handling middleware
+import express from 'express';
+import cors from 'cors';
 
-// Import routes
-const returnRoutes = require('./routes/returnRoutes');
-const greenbitsRoutes = require('./routes/greenbitsRoutes');
-const adminRoutes = require('./routes/adminRoutes'); // For internal/delivery partner APIs
+import errorHandler from './middleware/errorHandler.js';
+import returnRoutes from './routes/returnRoutes.js';
+import greenbitsRoutes from './routes/greenbitsRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 const app = express();
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes (adjust as needed for production)
-app.use(express.json()); // Parse JSON request bodies
+app.use(cors());
+app.use(express.json());
 
-// Route registration
+// Routes
 app.use('/api/returns', returnRoutes);
 app.use('/api/greenbits', greenbitsRoutes);
-app.use('/api/admin', adminRoutes); // Admin routes (e.g., for delivery partner updates)
+app.use('/api/admin', adminRoutes);
 
-// Basic route for testing
 app.get('/', (req, res) => {
-    res.send('SmartSho Recycling Backend is running!');
+  res.send('SmartSho Recycling Backend is running!');
 });
 
-// Global error handler middleware (should be last middleware)
 app.use(errorHandler);
 
-module.exports = app;
-
+export default app;

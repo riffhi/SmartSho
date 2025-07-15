@@ -1,6 +1,7 @@
 // smartsho-backend/src/controllers/returnController.js
 // Controller for handling packaging return requests from buyers
-const returnService = require('../services/returnService');
+
+import returnService from '../services/returnService.js';
 
 class ReturnController {
     /**
@@ -9,10 +10,8 @@ class ReturnController {
      */
     async requestReturn(req, res, next) {
         try {
-            // In a real app, userId would come from authenticated user session/token
             const { userId, packageId, orderId, pickupLocation } = req.body;
 
-            // Basic input validation
             if (!userId || !packageId || !orderId || !pickupLocation || !pickupLocation.address || !pickupLocation.pincode) {
                 return res.status(400).json({ success: false, message: 'Missing required fields for return request.' });
             }
@@ -31,7 +30,7 @@ class ReturnController {
                 status: newReturn.status,
             });
         } catch (error) {
-            next(error); // Pass error to the global error handler
+            next(error);
         }
     }
 
@@ -42,10 +41,7 @@ class ReturnController {
     async getReturnStatus(req, res, next) {
         try {
             const { id } = req.params;
-            // In a real app, userId would come from authenticated user session/token
-            // For now, let's assume userId is passed in query or body for simplicity in this example
-            // In production, you'd get this from req.user.id after authentication middleware
-            const userId = req.query.userId || req.body.userId; // Example: get from query for testing
+            const userId = req.query.userId || req.body.userId;
 
             if (!userId) {
                 return res.status(401).json({ success: false, message: 'Authentication required to view return status.' });
@@ -71,5 +67,6 @@ class ReturnController {
     }
 }
 
-module.exports = new ReturnController();
-
+// ✅ Export using ES Module syntax
+const returnController = new ReturnController();
+export default returnController;

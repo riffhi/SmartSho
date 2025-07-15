@@ -1,8 +1,10 @@
 // smartsho-backend/src/routes/greenbitsRoutes.js
 // Routes for GreenBits related actions
-const express = require('express');
+
+import express from 'express';
+import greenbitsController from '../controllers/greenbitsController.js';
+
 const router = express.Router();
-const greenbitsController = require('../controllers/greenbitsController');
 
 // GET /api/greenbits/:userId - Get a user's GreenBits balance and history
 router.get('/:userId', greenbitsController.getUserGreenbits);
@@ -10,5 +12,4 @@ router.get('/:userId', greenbitsController.getUserGreenbits);
 // POST /api/greenbits/redeem - Redeem GreenBits for discounts/rewards
 router.post('/redeem', greenbitsController.redeemGreenbits);
 
-module.exports = router;
-
+export default router;

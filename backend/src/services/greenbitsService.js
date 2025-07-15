@@ -1,8 +1,9 @@
 // smartsho-backend/src/services/greenbitsService.js
 // Business logic for GreenBits management (fetching balance, redemption)
-const User = require('../models/User');
-const GreenbitsTransaction = require('../models/GreenbitsTransaction');
-const { GREENBITS_PER_PACKAGE } = require('../config'); // Re-using config value for consistency
+
+import User from '../models/User.js';
+import GreenbitsTransaction from '../models/GreenbitsTransaction.js';
+import { GREENBITS_PER_PACKAGE } from '../config/index.js'; // Use .js if it's an ES module
 
 class GreenbitsService {
     /**
@@ -60,8 +61,7 @@ class GreenbitsService {
         });
         await greenbitsTransaction.save();
 
-        // TODO: Integrate with actual coupon/discount generation system here
-        // For now, we'll just log it.
+        // Log redemption
         console.log(`User ${userId} redeemed ${amount} GreenBits for ${redemptionType}.`);
 
         return {
@@ -71,5 +71,6 @@ class GreenbitsService {
     }
 }
 
-module.exports = new GreenbitsService();
-
+// ✅ Export as default
+const greenbitsService = new GreenbitsService();
+export default greenbitsService;
