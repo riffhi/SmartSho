@@ -51,6 +51,8 @@ export const categories: Category[] = [
   }
 ];
 
+// More natural descriptions that still contain sustainability scoring cues
+
 export const products: Product[] = [
   {
     id: '1',
@@ -64,7 +66,7 @@ export const products: Product[] = [
     subcategory: 'Kurtas & Suits',
     rating: 4.2,
     reviews: 1247,
-    description: 'Organic cotton kurta set with natural block printing using eco-friendly dyes. Handwoven fabric sourced from certified organic cotton farms in India. Minimal plastic packaging, biodegradable bags used. Traditional production methods with low water consumption and zero harmful chemicals.',
+    description: 'Beautiful floral print kurta set crafted from soft organic cotton using traditional block printing techniques. The intricate handwoven fabric feels luxurious against the skin while the natural dyes ensure vibrant, long-lasting colors. Perfect for casual outings or festive occasions. Comes in eco-friendly packaging.',
     features: [],
     inStock: true,
     seller: { name: 'Fashion Hub', rating: 4.3, location: 'Mumbai' },
@@ -82,7 +84,7 @@ export const products: Product[] = [
     subcategory: 'Shirts',
     rating: 4.1,
     reviews: 856,
-    description: 'Regular cotton shirt manufactured in fast-fashion facility using conventional farming methods. Synthetic dyes and chemical processing involved. Mass production with high water usage and chemical runoff. Plastic packaging and multiple transport stages from overseas manufacturing.',
+    description: 'Classic casual cotton shirt with a modern fit that works for both office and weekend wear. Made from regular cotton with easy-care finish that resists wrinkles. The versatile design pairs well with jeans or chinos. Machine washable for convenience.',
     features: [],
     inStock: true,
     seller: { name: 'Style Store', rating: 4.2, location: 'Delhi' },
@@ -100,7 +102,7 @@ export const products: Product[] = [
     subcategory: 'Boys Clothing',
     rating: 4.4,
     reviews: 432,
-    description: 'Polyester-cotton blend t-shirt with synthetic prints using petroleum-based inks. Machine-made in large manufacturing facility with standard industry practices. Plastic poly-bags for individual packaging. Moderate durability expected for growing children.',
+    description: 'Fun cartoon print t-shirt that kids will love to wear. Made from a comfortable cotton-polyester blend for durability and easy washing. The colorful graphics are printed with high-quality inks that won\'t fade easily. Great for active play and everyday wear.',
     features: [],
     inStock: true,
     seller: { name: 'Kids Corner', rating: 4.5, location: 'Bangalore' },
@@ -118,7 +120,7 @@ export const products: Product[] = [
     subcategory: 'Handbags',
     rating: 4.0,
     reviews: 234,
-    description: 'Synthetic leather handbag made from PVC and plastic materials. Chemical processing for texture and color. Non-biodegradable materials with limited lifespan. Factory production with standard packaging in plastic wraps and cardboard boxes.',
+    description: 'Stylish handbag with a sleek design that complements any outfit. Features multiple compartments for organized storage and a comfortable shoulder strap. The synthetic leather exterior is easy to clean and maintain. Perfect size for daily essentials.',
     features: [],
     inStock: true,
     seller: { name: 'Bag World', rating: 4.1, location: 'Chennai' },
@@ -136,7 +138,7 @@ export const products: Product[] = [
     subcategory: 'Jackets',
     rating: 4.3,
     reviews: 567,
-    description: 'Denim jacket made from conventional cotton with intensive water usage and chemical processing. Sandblasting and acid washing treatments. Heavy carbon footprint from multiple manufacturing stages. Durable construction designed for long-term use which improves sustainability over time.',
+    description: 'Trendy denim jacket with a vintage-inspired wash that adds character to any outfit. Made from durable cotton denim with classic styling details. The structured fit flatters all body types while the quality construction ensures it will last for years. A timeless wardrobe essential.',
     features: [],
     inStock: true,
     seller: { name: 'StyleStop', rating: 4.4, location: 'Pune' },
@@ -154,7 +156,7 @@ export const products: Product[] = [
     subcategory: 'Kitchen Appliances',
     rating: 4.6,
     reviews: 800,
-    description: 'High-grade stainless steel reusable water bottle designed to replace single-use plastic bottles. Recyclable materials, BPA-free, dishwasher safe. Minimal packaging using recyclable cardboard. Lifetime durability reduces waste generation and plastic pollution significantly.',
+    description: 'Premium stainless steel water bottle that keeps drinks cold for 24 hours or hot for 12 hours. The durable, BPA-free construction is built to last and won\'t retain odors or flavors. Leak-proof design with wide mouth for easy filling and cleaning. An eco-friendly alternative to disposable bottles.',
     features: [],
     inStock: true,
     seller: { name: 'EcoHome', rating: 4.7, location: 'Hyderabad' },
@@ -172,7 +174,7 @@ export const products: Product[] = [
     subcategory: 'Skincare',
     rating: 4.5,
     reviews: 945,
-    description: 'Natural herbal face wash with organic aloe vera, neem, and turmeric. Sourced from certified organic farms. Biodegradable formula free from parabens, sulfates, and synthetic fragrances. Recyclable glass bottle with minimal plastic components. Cruelty-free and vegan certified.',
+    description: 'Gentle herbal face wash enriched with natural aloe vera, neem, and turmeric for healthy, glowing skin. The organic formula is free from harsh chemicals and suitable for all skin types. Packaged in recyclable glass bottle. Cruelty-free and vegan-friendly.',
     features: [],
     inStock: true,
     seller: { name: 'GreenGlow', rating: 4.6, location: 'Ahmedabad' },
@@ -190,7 +192,7 @@ export const products: Product[] = [
     subcategory: 'Necklaces',
     rating: 4.1,
     reviews: 300,
-    description: 'Gold-plated jewelry set using mined metals and chemical electroplating processes. Mining operations have significant environmental impact including habitat destruction and water pollution. Non-renewable resource extraction with high carbon footprint. Ornate packaging with foam inserts.',
+    description: 'Elegant gold-plated necklace set with intricate design work that adds glamour to any occasion. The detailed craftsmanship showcases traditional artistry with a modern appeal. Complete set includes matching earrings. Comes in beautiful gift packaging.',
     features: [],
     inStock: true,
     seller: { name: 'ShineTime', rating: 4.2, location: 'Jaipur' },
@@ -208,7 +210,7 @@ export const products: Product[] = [
     subcategory: 'Boys Clothing',
     rating: 4.3,
     reviews: 410,
-    description: 'GOTS certified organic cotton shorts for children. Sustainable farming practices with reduced water usage and no pesticides. Natural dyes used for coloring. Ethically produced in fair-trade certified facility. Compostable packaging materials and recyclable labels.',
+    description: 'Comfortable cotton shorts perfect for active boys. Made from GOTS certified organic cotton with natural dyes for safe, breathable wear. The relaxed fit allows for easy movement during play. Ethically made with sustainable practices and eco-friendly packaging.',
     features: [],
     inStock: true,
     seller: { name: 'TinyTrendz', rating: 4.3, location: 'Surat' },
@@ -226,7 +228,7 @@ export const products: Product[] = [
     subcategory: 'Formal Wear',
     rating: 4.0,
     reviews: 260,
-    description: 'Poly-cotton blend formal trousers using synthetic fibers derived from petroleum. Chemical treatments for wrinkle resistance and stain protection. Factory production with standard dyeing processes. Designed for professional wear with moderate durability and easy care requirements.',
+    description: 'Professional formal trousers with a sharp, tailored fit ideal for office wear. The poly-cotton blend fabric is wrinkle-resistant and easy to care for. Features classic styling with a comfortable waistband and clean lines that pair well with dress shirts.',
     features: [],
     inStock: true,
     seller: { name: 'CorporateFit', rating: 4.0, location: 'Noida' },
@@ -234,5 +236,9 @@ export const products: Product[] = [
   }
 ];
 
+// Sustainability scoring keywords you can look for in descriptions:
+// High sustainability: "organic", "natural", "eco-friendly", "recyclable", "cruelty-free", "vegan", "GOTS certified", "sustainable", "ethically made"
+// Medium sustainability: "cotton", "durable", "quality construction", "timeless", "BPA-free"
+// Low sustainability: "synthetic", "poly-cotton blend", "chemical", "easy-care", "wrinkle-resistant"
 export const featuredProducts = products.slice(0, 8);
 export const bestSellers = products.slice(4, 10);
