@@ -1,6 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import CacheManager from './components/CacheManager';
+import React, { useState, useMemo } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
@@ -16,19 +14,25 @@ import SupplierPage from './components/SupplierPage';
 import BuyerChatbot from './components/BuyerChatbot';
 import SellerLogin from './components/SellerLogin';
 import { Product } from './types';
-// import CacheManager from './components/CacheManager';
+import MyReturnsPage from './components/MyReturnPage'; 
 
-// ✅ Dummy RewardsPage component
-const RewardsPage: React.FC = () => (
+// ✅ Dummy RewardsPage
+const RewardsPage: React.FC<{ onReturnClick: () => void }> = ({ onReturnClick }) => (
   <div className="min-h-screen flex flex-col items-center justify-center bg-yellow-50 text-center p-8">
     <h1 className="text-4xl font-bold text-yellow-600 mb-4">🎉 Your GreenBits Rewards</h1>
-    <p className="text-xl text-gray-700 mb-6">
+    <p className="text-xl text-gray-700 mb-4">
       You have <span className="font-bold text-yellow-700">142</span> GreenBits.
     </p>
-    <p className="text-md text-gray-600 max-w-xl mb-8">
+    <p className="text-md text-gray-600 max-w-xl mb-6">
       GreenBits are loyalty points earned by purchasing eco-friendly products.
       Redeem them soon for exclusive discounts and special products.
     </p>
+    <button
+      onClick={onReturnClick}
+      className="mt-4 px-6 py-2 bg-pink-600 text-white rounded-full font-semibold hover:bg-pink-700 transition"
+    >
+      📦 View My Returns
+    </button>
   </div>
 );
 
@@ -37,10 +41,12 @@ function App() {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
   const [showGreenBharat, setShowGreenBharat] = useState(false);
   const [showSupplierPage, setShowSupplierPage] = useState(false);
   const [showSellerLogin, setShowSellerLogin] = useState(false);
-  const [showRewardsPage, setShowRewardsPage] = useState(false); // ✅ New state
+  const [showRewardsPage, setShowRewardsPage] = useState(false);
+  const [showMyReturnsPage, setShowMyReturnsPage] = useState(false); // ✅
 
   const filteredProducts = useMemo(() => {
     if (!selectedCategory) return products;
@@ -52,12 +58,9 @@ function App() {
     setIsProductModalOpen(true);
   };
 
-  <div className="cache-manager-section">
-        <CacheManager />
-  </div>
   const handleCategoryClick = (category: string) => {
     resetPageStates();
-  setTimeout(() => setSelectedCategory(category), 0);
+    setTimeout(() => setSelectedCategory(category), 0);
   };
 
   const handleCartClick = () => {
@@ -66,12 +69,17 @@ function App() {
 
   const handleGreenBharatClick = () => {
     resetPageStates();
-  setTimeout(() => setShowGreenBharat(true), 0);
+    setTimeout(() => setShowGreenBharat(true), 0);
   };
 
   const handleSupplierClick = () => {
     resetPageStates();
-  setTimeout(() => setShowSupplierPage(true), 0);
+    setTimeout(() => setShowSupplierPage(true), 0);
+  };
+
+  const handleMyReturnsClick = () => {
+    resetPageStates();
+    setTimeout(() => setShowMyReturnsPage(true), 0);
   };
 
   const resetPageStates = () => {
@@ -79,6 +87,7 @@ function App() {
     setShowSupplierPage(false);
     setShowSellerLogin(false);
     setShowRewardsPage(false);
+    setShowMyReturnsPage(false);
     setSelectedCategory(null);
   };
 
@@ -102,9 +111,21 @@ function App() {
           />
         ) : showSupplierPage ? (
           <SupplierPage onSellerLoginClick={() => setShowSellerLogin(true)} />
+        ) : showMyReturnsPage ? (
+          <>
+            <MyReturnsPage />
+            <div className="text-center py-4">
+              <button
+                onClick={resetPageStates}
+                className="text-pink-600 hover:text-pink-700 font-medium"
+              >
+                ← Back to Home
+              </button>
+            </div>
+          </>
         ) : showRewardsPage ? (
           <>
-            <RewardsPage />
+            <RewardsPage onReturnClick={handleMyReturnsClick} />
             <div className="text-center py-4">
               <button
                 onClick={resetPageStates}
@@ -186,7 +207,9 @@ function App() {
 
         <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
-        {!showSupplierPage && !showSellerLogin && !showRewardsPage && <BuyerChatbot />}
+        {!showSupplierPage && !showSellerLogin && !showRewardsPage && !showMyReturnsPage && (
+          <BuyerChatbot />
+        )}
       </div>
     </CartProvider>
   );
