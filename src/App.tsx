@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import CategoryGrid from './components/CategoryGrid';
@@ -13,6 +13,8 @@ import GreenBharatSection from './components/GreenBharatSection';
 import SupplierPage from './components/SupplierPage';
 import BuyerChatbot from './components/BuyerChatbot';
 import SellerLogin from './components/SellerLogin';
+import SellerSignup from './components/SellerSignup';
+import SellerChatbot from './components/SellerChatbot';
 import { Product } from './types';
 import MyReturnsPage from './components/MyReturnPage'; 
 
@@ -45,7 +47,22 @@ function App() {
   const [showGreenBharat, setShowGreenBharat] = useState(false);
   const [showSupplierPage, setShowSupplierPage] = useState(false);
   const [showSellerLogin, setShowSellerLogin] = useState(false);
+
+  const [showSellerSignup, setShowSellerSignup] = useState(false);
   const [showRewardsPage, setShowRewardsPage] = useState(false);
+  const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(false);
+
+  // Check if seller is already logged in on component mount
+  useEffect(() => {
+    const userRole = localStorage.getItem('userRole');
+    if (userRole === 'seller') {
+      setIsSellerLoggedIn(true);
+    } else {
+      setIsSellerLoggedIn(false);
+    }
+  }, []);
+  
+  
   const [showMyReturnsPage, setShowMyReturnsPage] = useState(false); // ✅
 
   const filteredProducts = useMemo(() => {
@@ -77,19 +94,52 @@ function App() {
     setTimeout(() => setShowSupplierPage(true), 0);
   };
 
-  const handleMyReturnsClick = () => {
-    resetPageStates();
-    setTimeout(() => setShowMyReturnsPage(true), 0);
-  };
-
   const resetPageStates = () => {
     setShowGreenBharat(false);
     setShowSupplierPage(false);
     setShowSellerLogin(false);
+    setShowSellerSignup(false);
     setShowRewardsPage(false);
     setShowMyReturnsPage(false);
     setSelectedCategory(null);
   };
+
+  const handleSellerLoginSuccess = () => {
+    localStorage.setItem('userRole', 'seller');
+    setIsSellerLoggedIn(true);
+    setShowSellerLogin(false);
+    setShowSellerSignup(false);
+    setShowSupplierPage(true);
+  };
+
+  const handleSellerSignupSuccess = () => {
+    localStorage.setItem('userRole', 'seller');
+    setIsSellerLoggedIn(true);
+    setShowSellerSignup(false);
+    setShowSellerLogin(false);
+    setShowSupplierPage(true);
+  };
+
+  const handleSwitchToSignup = () => {
+    setShowSellerLogin(false);
+    setShowSellerSignup(true);
+  };
+
+  const handleSwitchToLogin = () => {
+    setShowSellerSignup(false);
+    setShowSellerLogin(true);
+  };
+
+  const handleSellerLogout = () => {
+    localStorage.removeItem('userRole');
+    setIsSellerLoggedIn(false);
+    resetPageStates();
+  };
+
+  const handleMyReturnsClick = () => {
+  setShowMyReturnsPage(true);
+  setShowRewardsPage(false);
+};
 
   return (
     <CartProvider>
@@ -101,28 +151,23 @@ function App() {
           onSupplierClick={handleSupplierClick}
         />
 
+      
+
         {showSellerLogin ? (
-          <SellerLogin
-            onLoginSuccess={() => {
-              localStorage.setItem('userRole', 'seller');
-              setShowSellerLogin(false);
-              setShowSupplierPage(true);
-            }}
+          <SellerLogin 
+            onLoginSuccess={handleSellerLoginSuccess} 
+            onSwitchToSignup={handleSwitchToSignup}
+          />
+        ) : showSellerSignup ? (
+          <SellerSignup 
+            onSignupSuccess={handleSellerSignupSuccess}
+            onSwitchToLogin={handleSwitchToLogin}
           />
         ) : showSupplierPage ? (
-          <SupplierPage onSellerLoginClick={() => setShowSellerLogin(true)} />
-        ) : showMyReturnsPage ? (
-          <>
-            <MyReturnsPage />
-            <div className="text-center py-4">
-              <button
-                onClick={resetPageStates}
-                className="text-pink-600 hover:text-pink-700 font-medium"
-              >
-                ← Back to Home
-              </button>
-            </div>
-          </>
+          <SupplierPage 
+            onSellerLoginClick={() => setShowSellerLogin(true)}
+            onLogout={handleSellerLogout}
+          />
         ) : showRewardsPage ? (
           <>
             <RewardsPage onReturnClick={handleMyReturnsClick} />
@@ -207,8 +252,11 @@ function App() {
 
         <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
-        {!showSupplierPage && !showSellerLogin && !showRewardsPage && !showMyReturnsPage && (
-          <BuyerChatbot />
+        {/* Fixed chatbot rendering logic */}
+        {isSellerLoggedIn && showSupplierPage ? (
+          <SellerChatbot />
+        ) : (
+          !showSupplierPage && !showSellerLogin && !showSellerSignup && !showRewardsPage && <BuyerChatbot />
         )}
       </div>
     </CartProvider>
