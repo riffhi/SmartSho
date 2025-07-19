@@ -6,6 +6,7 @@ import errorHandler from './middleware/errorHandler.js';
 import returnRoutes from './routes/returnRoutes.js';
 import greenbitsRoutes from './routes/greenbitsRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import authRoutes from './routes/authRoutes.js'; 
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use('/api/returns', returnRoutes);
 app.use('/api/greenbits', greenbitsRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/auth', authRoutes);
 
 app.get('/', (req, res) => {
   res.send('SmartSho Recycling Backend is running!');

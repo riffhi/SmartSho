@@ -2,23 +2,47 @@ import React, { useState } from 'react';
 
 interface SellerLoginProps {
   onLoginSuccess: () => void;
+  onSwitchToSignup: () => void;
 }
 
-const SellerLogin: React.FC<SellerLoginProps> = ({ onLoginSuccess }) => {
+const SellerLogin: React.FC<SellerLoginProps> = ({ onLoginSuccess, onSwitchToSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
 
-    // Simulated authentication
-    if (email === 'seller@example.com' && password === 'password123') {
-      localStorage.setItem('userRole', 'seller');
-      localStorage.setItem('userEmail', email);
-      onLoginSuccess(); // Notify App to switch to SupplierPage
-    } else {
-      setError('Invalid seller credentials');
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/seller-login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Store user data in localStorage - match backend response structure
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('userEmail', data.seller.email); // Changed from data.user to data.seller
+        localStorage.setItem('userRole', 'seller');
+        localStorage.setItem('isLoggedIn', 'true'); // Add this for chatbot visibility
+        
+        onLoginSuccess(); // Notify App to switch to SupplierPage
+      } else {
+        setError(data.message || 'Login failed');
+      }
+    } catch (error) {
+      setError('Network error. Please try again.');
+      console.error('Login error:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,7 +62,7 @@ const SellerLogin: React.FC<SellerLoginProps> = ({ onLoginSuccess }) => {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
-              placeholder="seller@example.com"
+              placeholder="Enter your email"
             />
           </div>
 
@@ -56,11 +80,24 @@ const SellerLogin: React.FC<SellerLoginProps> = ({ onLoginSuccess }) => {
 
           <button
             type="submit"
-            className="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition"
+            disabled={loading}
+            className="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition disabled:opacity-50"
           >
-            Login as Seller
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+
+        <div className="mt-6 text-center">
+          <p className="text-sm text-gray-600">
+            Don't have an account?{' '}
+            <button
+              onClick={onSwitchToSignup}
+              className="text-pink-600 hover:text-pink-700 font-medium underline"
+            >
+              Sign up here
+            </button>
+          </p>
+        </div>
       </div>
     </div>
   );

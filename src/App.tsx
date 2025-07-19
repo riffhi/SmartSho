@@ -15,6 +15,8 @@ import GreenBharatSection from './components/GreenBharatSection';
 import SupplierPage from './components/SupplierPage';
 import BuyerChatbot from './components/BuyerChatbot';
 import SellerLogin from './components/SellerLogin';
+import SellerSignup from './components/SellerSignup';
+import SellerChatbot from './components/SellerChatbot';
 import { Product } from './types';
 // import CacheManager from './components/CacheManager';
 
@@ -40,7 +42,19 @@ function App() {
   const [showGreenBharat, setShowGreenBharat] = useState(false);
   const [showSupplierPage, setShowSupplierPage] = useState(false);
   const [showSellerLogin, setShowSellerLogin] = useState(false);
-  const [showRewardsPage, setShowRewardsPage] = useState(false); // ✅ New state
+  const [showSellerSignup, setShowSellerSignup] = useState(false);
+  const [showRewardsPage, setShowRewardsPage] = useState(false);
+  const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(false);
+
+  // Check if seller is already logged in on component mount
+  useEffect(() => {
+    const userRole = localStorage.getItem('userRole');
+    if (userRole === 'seller') {
+      setIsSellerLoggedIn(true);
+    } else {
+      setIsSellerLoggedIn(false);
+    }
+  }, []);
 
   const filteredProducts = useMemo(() => {
     if (!selectedCategory) return products;
@@ -52,12 +66,9 @@ function App() {
     setIsProductModalOpen(true);
   };
 
-  <div className="cache-manager-section">
-        <CacheManager />
-  </div>
   const handleCategoryClick = (category: string) => {
     resetPageStates();
-  setTimeout(() => setSelectedCategory(category), 0);
+    setTimeout(() => setSelectedCategory(category), 0);
   };
 
   const handleCartClick = () => {
@@ -66,20 +77,53 @@ function App() {
 
   const handleGreenBharatClick = () => {
     resetPageStates();
-  setTimeout(() => setShowGreenBharat(true), 0);
+    setTimeout(() => setShowGreenBharat(true), 0);
   };
 
   const handleSupplierClick = () => {
     resetPageStates();
-  setTimeout(() => setShowSupplierPage(true), 0);
+    setTimeout(() => setShowSupplierPage(true), 0);
   };
 
   const resetPageStates = () => {
     setShowGreenBharat(false);
     setShowSupplierPage(false);
     setShowSellerLogin(false);
+    setShowSellerSignup(false);
     setShowRewardsPage(false);
     setSelectedCategory(null);
+  };
+
+  const handleSellerLoginSuccess = () => {
+    localStorage.setItem('userRole', 'seller');
+    setIsSellerLoggedIn(true);
+    setShowSellerLogin(false);
+    setShowSellerSignup(false);
+    setShowSupplierPage(true);
+  };
+
+  const handleSellerSignupSuccess = () => {
+    localStorage.setItem('userRole', 'seller');
+    setIsSellerLoggedIn(true);
+    setShowSellerSignup(false);
+    setShowSellerLogin(false);
+    setShowSupplierPage(true);
+  };
+
+  const handleSwitchToSignup = () => {
+    setShowSellerLogin(false);
+    setShowSellerSignup(true);
+  };
+
+  const handleSwitchToLogin = () => {
+    setShowSellerSignup(false);
+    setShowSellerLogin(true);
+  };
+
+  const handleSellerLogout = () => {
+    localStorage.removeItem('userRole');
+    setIsSellerLoggedIn(false);
+    resetPageStates();
   };
 
   return (
@@ -92,16 +136,23 @@ function App() {
           onSupplierClick={handleSupplierClick}
         />
 
+      
+
         {showSellerLogin ? (
-          <SellerLogin
-            onLoginSuccess={() => {
-              localStorage.setItem('userRole', 'seller');
-              setShowSellerLogin(false);
-              setShowSupplierPage(true);
-            }}
+          <SellerLogin 
+            onLoginSuccess={handleSellerLoginSuccess} 
+            onSwitchToSignup={handleSwitchToSignup}
+          />
+        ) : showSellerSignup ? (
+          <SellerSignup 
+            onSignupSuccess={handleSellerSignupSuccess}
+            onSwitchToLogin={handleSwitchToLogin}
           />
         ) : showSupplierPage ? (
-          <SupplierPage onSellerLoginClick={() => setShowSellerLogin(true)} />
+          <SupplierPage 
+            onSellerLoginClick={() => setShowSellerLogin(true)}
+            onLogout={handleSellerLogout}
+          />
         ) : showRewardsPage ? (
           <>
             <RewardsPage />
@@ -186,7 +237,12 @@ function App() {
 
         <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
-        {!showSupplierPage && !showSellerLogin && !showRewardsPage && <BuyerChatbot />}
+        {/* Fixed chatbot rendering logic */}
+        {isSellerLoggedIn && showSupplierPage ? (
+          <SellerChatbot />
+        ) : (
+          !showSupplierPage && !showSellerLogin && !showSellerSignup && !showRewardsPage && <BuyerChatbot />
+        )}
       </div>
     </CartProvider>
   );
