@@ -1,5 +1,31 @@
+import { franc } from 'franc';
+
 export async function getBuyerBotResponse(message: string): Promise<string> {
   try {
+    const langCode = franc(message);
+    const langMap: Record<string, string> = {
+      eng: 'English',
+      hin: 'Hindi',
+      mar: 'Marathi',
+      und: 'English'
+    };
+    const detectedLang = langMap[langCode] || 'English';
+
+    const systemPrompt = `
+You are a multilingual shopping assistant for Meesho buyers.
+
+🌿 Help users with:
+- Trending fashion, returns, delivery, payments
+- Eco-friendly alternatives (like bamboo brushes, jute bags)
+- Suggesting green-tagged products
+
+🧠 Language guide:
+- Respond in the user's language.
+- If it's Hindi or Marathi, write in Devanagari script only (e.g., "नमस्ते").
+- Avoid using English letters for Hindi (no "aap", "kya").
+- Keep tone helpful, friendly, short and bullet-style if needed.
+`;
+
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -7,35 +33,15 @@ export async function getBuyerBotResponse(message: string): Promise<string> {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'mistralai/mistral-7b-instruct',
+        model: 'deepseek/deepseek-chat-v3-0324:free', 
         messages: [
-          {
-            role: 'system',
-            content: `You are a friendly and helpful AI shopping assistant for Meesho buyers.
-
-Your job is to assist users with:
-- Shopping help (e.g., finding trendy clothes, category suggestions)
-- Order tracking, returns, refunds, delivery and payment queries
-- Recommending Meesho products based on fashion trends and needs
-
-When asked about “trendy clothes” or what’s in style, reply with:
-1. 🎉 Popular Categories: Ethnic wear, Western wear, Activewear, Accessories, Beauty
-2. ✅ Specific examples like sarees, kurtis, co-ord sets, crop tops, handbags, skincare kits
-3. 📱 Navigation tip: Recommend using the "Trending Now" section on the Meesho app or homepage
-
-Keep your tone friendly, clear, concise, and helpful. Avoid long-winded answers. Respond naturally and conversationally.`
-          },
-          {
-            role: 'user',
-            content: message
-          }
+          { role: 'system', content: systemPrompt.trim() },
+          { role: 'user', content: message }
         ]
       })
     });
 
     const data = await response.json();
-
-
     console.log('[BuyerBot]', data);
 
     return data.choices?.[0]?.message?.content ?? 'Sorry, I didn’t get that. Try rephrasing.';
