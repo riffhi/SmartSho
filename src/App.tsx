@@ -16,6 +16,27 @@ import SellerLogin from './components/SellerLogin';
 import SellerSignup from './components/SellerSignup';
 import SellerChatbot from './components/SellerChatbot';
 import { Product } from './types';
+import MyReturnsPage from './components/MyReturnPage'; 
+
+// ✅ Dummy RewardsPage
+const RewardsPage: React.FC<{ onReturnClick: () => void }> = ({ onReturnClick }) => (
+  <div className="min-h-screen flex flex-col items-center justify-center bg-yellow-50 text-center p-8">
+    <h1 className="text-4xl font-bold text-yellow-600 mb-4">🎉 Your GreenBits Rewards</h1>
+    <p className="text-xl text-gray-700 mb-4">
+      You have <span className="font-bold text-yellow-700">142</span> GreenBits.
+    </p>
+    <p className="text-md text-gray-600 max-w-xl mb-6">
+      GreenBits are loyalty points earned by purchasing eco-friendly products.
+      Redeem them soon for exclusive discounts and special products.
+    </p>
+    <button
+      onClick={onReturnClick}
+      className="mt-4 px-6 py-2 bg-pink-600 text-white rounded-full font-semibold hover:bg-pink-700 transition"
+    >
+      📦 View My Returns
+    </button>
+  </div>
+);
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -26,13 +47,23 @@ function App() {
   const [showGreenBharat, setShowGreenBharat] = useState(false);
   const [showSupplierPage, setShowSupplierPage] = useState(false);
   const [showSellerLogin, setShowSellerLogin] = useState(false);
+
   const [showSellerSignup, setShowSellerSignup] = useState(false);
   const [showRewardsPage, setShowRewardsPage] = useState(false);
   const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(false);
 
+  // Check if seller is already logged in on component mount
   useEffect(() => {
     const userRole = localStorage.getItem('userRole');
+    if (userRole === 'seller') {
+      setIsSellerLoggedIn(true);
+    } else {
+      setIsSellerLoggedIn(false);
+    }
   }, []);
+  
+  
+  const [showMyReturnsPage, setShowMyReturnsPage] = useState(false); // ✅
 
   const filteredProducts = useMemo(() => {
     if (!selectedCategory) return products;
@@ -49,6 +80,9 @@ function App() {
     setTimeout(() => setSelectedCategory(category), 0);
   };
 
+  const handleCartClick = () => {
+    setIsCartOpen(true);
+  };
 
   const handleGreenBharatClick = () => {
     resetPageStates();
@@ -103,126 +137,129 @@ function App() {
   };
 
   const handleMyReturnsClick = () => {
-    setShowMyReturnsPage(true);
-    setShowRewardsPage(false);
-  };
+  setShowMyReturnsPage(true);
+  setShowRewardsPage(false);
+};
 
   return (
-      <CartProvider>
-        <div className="min-h-screen bg-gray-50">
-          <Header
-              onCartClick={handleCartClick}
-              onCategoryClick={handleCategoryClick}
-              onGreenBharatClick={handleGreenBharatClick}
-              onSupplierClick={handleSupplierClick}
-          />
+    <CartProvider>
+      <div className="min-h-screen bg-gray-50">
+        <Header
+          onCartClick={handleCartClick}
+          onCategoryClick={handleCategoryClick}
+          onGreenBharatClick={handleGreenBharatClick}
+          onSupplierClick={handleSupplierClick}
+        />
 
-          {showSellerLogin ? (
-              <SellerLogin
-                  onLoginSuccess={handleSellerLoginSuccess}
-                  onSwitchToSignup={handleSwitchToSignup}
-              />
-          ) : showSellerSignup ? (
-              <SellerSignup
-                  onSignupSuccess={handleSellerSignupSuccess}
-                  onSwitchToLogin={handleSwitchToLogin}
-              />
-          ) : showSupplierPage ? (
-              <SupplierPage
-                  onSellerLoginClick={() => setShowSellerLogin(true)}
-                  onLogout={handleSellerLogout}
-              />
-          ) : showRewardsPage ? (
-              <>
-                <RewardsPage onReturnClick={handleMyReturnsClick} />
-                <div className="text-center py-4">
+      
+
+        {showSellerLogin ? (
+          <SellerLogin 
+            onLoginSuccess={handleSellerLoginSuccess} 
+            onSwitchToSignup={handleSwitchToSignup}
+          />
+        ) : showSellerSignup ? (
+          <SellerSignup 
+            onSignupSuccess={handleSellerSignupSuccess}
+            onSwitchToLogin={handleSwitchToLogin}
+          />
+        ) : showSupplierPage ? (
+          <SupplierPage 
+            onSellerLoginClick={() => setShowSellerLogin(true)}
+            onLogout={handleSellerLogout}
+          />
+        ) : showRewardsPage ? (
+          <>
+            <RewardsPage onReturnClick={handleMyReturnsClick} />
+            <div className="text-center py-4">
+              <button
+                onClick={resetPageStates}
+                className="text-pink-600 hover:text-pink-700 font-medium"
+              >
+                ← Back to Home
+              </button>
+            </div>
+          </>
+        ) : showGreenBharat ? (
+          <div>
+            <div className="bg-white py-6 border-b">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="flex items-center justify-between">
+                  <h1 className="text-2xl font-bold text-green-600">GreenBharat - Eco-Friendly Products</h1>
                   <button
-                      onClick={resetPageStates}
-                      className="text-pink-600 hover:text-pink-700 font-medium"
+                    onClick={resetPageStates}
+                    className="text-pink-600 hover:text-pink-700 font-medium"
                   >
                     ← Back to Home
                   </button>
                 </div>
-              </>
-          ) : showGreenBharat ? (
-              <div>
-                <div className="bg-white py-6 border-b">
-                  <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex items-center justify-between">
-                      <h1 className="text-2xl font-bold text-green-600">GreenBharat - Eco-Friendly Products</h1>
-                      <button
-                          onClick={resetPageStates}
-                          className="text-pink-600 hover:text-pink-700 font-medium"
-                      >
-                        ← Back to Home
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <GreenBharatSection
-                    products={ecoProducts}
-                    onProductClick={handleProductClick}
-                    onGreenBitsClick={() => {
-                      setShowRewardsPage(true);
-                      setShowGreenBharat(false);
-                    }}
-                />
               </div>
-          ) : selectedCategory ? (
-              <div id="products">
-                <div className="bg-white py-6 border-b">
-                  <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex items-center justify-between">
-                      <h1 className="text-2xl font-bold text-gray-800">{selectedCategory}</h1>
-                      <button
-                          onClick={resetPageStates}
-                          className="text-pink-600 hover:text-pink-700 font-medium"
-                      >
-                        ← Back to Home
-                      </button>
-                    </div>
-                  </div>
+            </div>
+            <GreenBharatSection
+              products={ecoProducts}
+              onProductClick={handleProductClick}
+              onGreenBitsClick={() => {
+                setShowRewardsPage(true);
+                setShowGreenBharat(false);
+              }}
+            />
+          </div>
+        ) : selectedCategory ? (
+          <div id="products">
+            <div className="bg-white py-6 border-b">
+              <div className="max-w-7xl mx-auto px-4">
+                <div className="flex items-center justify-between">
+                  <h1 className="text-2xl font-bold text-gray-800">{selectedCategory}</h1>
+                  <button
+                    onClick={resetPageStates}
+                    className="text-pink-600 hover:text-pink-700 font-medium"
+                  >
+                    ← Back to Home
+                  </button>
                 </div>
-                <ProductGrid
-                    products={filteredProducts}
-                    title={`${selectedCategory} Products`}
-                    onProductClick={handleProductClick}
-                />
               </div>
-          ) : (
-              <>
-                <Hero />
-                <CategoryGrid categories={categories} onCategoryClick={handleCategoryClick} />
-                <ProductGrid
-                    products={featuredProducts}
-                    title="Featured Products"
-                    onProductClick={handleProductClick}
-                />
-                <ProductGrid
-                    products={bestSellers}
-                    title="Best Sellers"
-                    onProductClick={handleProductClick}
-                />
-              </>
-          )}
+            </div>
+            <ProductGrid
+              products={filteredProducts}
+              title={`${selectedCategory} Products`}
+              onProductClick={handleProductClick}
+            />
+          </div>
+        ) : (
+          <>
+            <Hero />
+            <CategoryGrid categories={categories} onCategoryClick={handleCategoryClick} />
+            <ProductGrid
+              products={featuredProducts}
+              title="Featured Products"
+              onProductClick={handleProductClick}
+            />
+            <ProductGrid
+              products={bestSellers}
+              title="Best Sellers"
+              onProductClick={handleProductClick}
+            />
+          </>
+        )}
 
-          <Footer />
+        <Footer />
 
-          <ProductModal
-              product={selectedProduct}
-              isOpen={isProductModalOpen}
-              onClose={() => setIsProductModalOpen(false)}
-          />
+        <ProductModal
+          product={selectedProduct}
+          isOpen={isProductModalOpen}
+          onClose={() => setIsProductModalOpen(false)}
+        />
 
-          <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+        <Cart isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
 
-          {isSellerLoggedIn && showSupplierPage ? (
-              <SellerChatbot />
-          ) : (
-              !showSupplierPage && !showSellerLogin && !showSellerSignup && !showRewardsPage && <BuyerChatbot />
-          )}
-        </div>
-      </CartProvider>
+        {/* Fixed chatbot rendering logic */}
+        {isSellerLoggedIn && showSupplierPage ? (
+          <SellerChatbot />
+        ) : (
+          !showSupplierPage && !showSellerLogin && !showSellerSignup && !showRewardsPage && <BuyerChatbot />
+        )}
+      </div>
+    </CartProvider>
   );
 }
 
