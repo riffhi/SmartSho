@@ -1,6 +1,7 @@
 # SmartSho: A Sustainable Commerce Ecosystem 🛍️🌿
 
-**SmartSho is an intelligent, AI-powered platform that transforms the e-commerce experience into India's first comprehensive sustainable commerce ecosystem. It seamlessly integrates inventory optimization, sustainability scoring, green supplier networks, and circular economy principles into one unified platform.**
+SmartSho is an intelligent, AI-powered platform that transforms the e-commerce experience into India's first comprehensive sustainable commerce ecosystem. It seamlessly integrates inventory optimization, sustainability scoring, green supplier networks, and circular economy principles into one unified platform.
+---
 https://smartsho.vercel.app/
 ---
 
