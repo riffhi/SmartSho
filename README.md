@@ -2,7 +2,7 @@
 
 Welcome to **SmartSho**, a modern, feature-rich e-commerce platform inspired by Meesho. This project goes beyond a standard clone by integrating advanced features like an AI-powered multilingual chatbot for buyers and sellers, a sustainability rewards program ("GreenBits"), and dynamic eco-friendly product scoring.
 
-![SmartSho Homepage](https://i.imgur.com/your-screenshot-url.png) 
+![SmartSho Homepage]([https://i.imgur.com/your-screenshot-url.png](https://smartsho.vercel.app/)) 
 
 ---
 
