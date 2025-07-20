@@ -1,0 +1,56 @@
+{
+  "topBar": {
+    "easyReturn": "7 दिवस सोपी परत",
+    "cashOnDelivery": "डिलिव्हरीवर रोख",
+    "lowestPrices": "सर्वात कमी किंमती",
+    "becomeSupplier": "पुरवठादार बना",
+    "investorRelations": "गुंतवणूकदार संबंध"
+  },
+  "nav": {
+    "home": "मुख्यपृष्ठ",
+    "products": "उत्पादने",
+    "about": "आमच्याबद्दल",
+    "contact": "संपर्क करा",
+    "cart": "कार्ट",
+    "profile": "प्रोफाइल",
+    "greenBharat": "ग्रीन भारत",
+    "aiAgent": "एआय एजंट"
+  },
+  "search": {
+    "placeholder": "साडी, कुर्ती किंवा प्रॉडक्ट कोडने शोधा"
+  },
+  "categories": {
+    "womenethnic": "महिला पारंपरिक",
+    "womenwestern": "महिला पाश्चिमात्य",
+    "men": "पुरुष",
+    "kids": "मुले",
+    "home&kitchen": "घर आणि स्वयंपाकघर",
+    "beauty&health": "सौंदर्य आणि आरोग्य",
+    "jewellery&accessories": "दागिने व अ‍ॅक्सेसरीज",
+    "bags&footwear": "बॅग्ज व पादत्राणे",
+    "electronics": "इलेक्ट्रॉनिक्स",
+    "sports&fitness": "क्रीडा व फिटनेस"
+  },
+  "hero": {
+    "title": "आमच्या स्टोअरमध्ये स्वागत आहे",
+    "subtitle": "उत्तम किंमतीत अप्रतिम उत्पादने शोधा"
+  },
+  "product": {
+    "addToCart": "कार्टमध्ये जोडा",
+    "price": "किंमत",
+    "viewDetails": "तपशील पहा",
+    "outOfStock": "स्टॉक संपले"
+  },
+  "cart": {
+    "title": "खरेदी कार्ट",
+    "empty": "तुमचा कार्ट रिकामा आहे",
+    "total": "एकूण",
+    "checkout": "चेकआउट"
+  },
+  "common": {
+    "loading": "लोड करत आहे...",
+    "error": "काहीतरी चुकले",
+    "save": "जतन करा",
+    "cancel": "रद्द करा"
+  }
+}

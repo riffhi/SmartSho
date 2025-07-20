@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Bot, User, Loader2 } from 'lucide-react';
 import { getBuyerBotResponse } from '../utils/getBuyerBotResponse';
 
+
 interface Message {
   id: string;
   text: string;

@@ -1,0 +1,50 @@
+{
+  "topBar": {
+    "easyReturn": "7 दिन की आसान वापसी",
+    "cashOnDelivery": "कैश ऑन डिलीवरी",
+    "lowestPrices": "सबसे कम कीमतें",
+    "becomeSupplier": "आपूर्तिकर्ता बनें",
+    "investorRelations": "निवेशक संबंध"
+  },
+  "nav": {
+    "home": "होम",
+    "products": "उत्पाद",
+    "about": "हमारे बारे में",
+    "contact": "संपर्क करें",
+    "cart": "कार्ट",
+    "profile": "प्रोफ़ाइल",
+    "greenBharat": "ग्रीन भारत",
+    "aiAgent": "एआई एजेंट"
+  },
+  "search": {
+    "placeholder": "साड़ी, कुर्ती या उत्पाद कोड द्वारा खोजें"
+  },
+  "categories": {
+    "womenethnic": "महिला पारंपरिक",
+    "womenwestern": "महिला वेस्टर्न",
+    "men": "पुरुष",
+    "kids": "बच्चे",
+    "home&kitchen": "घर और रसोई",
+    "beauty&health": "सौंदर्य और स्वास्थ्य",
+    "jewellery&accessories": "आभूषण और सहायक उपकरण",
+    "bags&footwear": "बैग और फुटवियर",
+    "electronics": "इलेक्ट्रॉनिक्स",
+    "sports&fitness": "खेल और फिटनेस"
+  },
+  "hero": {
+    "title": "हमारी स्टोर में आपका स्वागत है",
+    "subtitle": "शानदार कीमतों पर बेहतरीन उत्पाद खोजें"
+  },
+  "product": {
+    "addToCart": "कार्ट में जोड़ें",
+    "price": "कीमत",
+    "viewDetails": "विवरण देखें",
+    "outOfStock": "स्टॉक में नहीं"
+  },
+  "cart": {
+    "title": "शॉपिंग कार्ट",
+    "empty": "आपकी कार्ट खाली है",
+    "total": "कुल",
+    "checkout": "चेकआ"
+  }
+}

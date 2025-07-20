@@ -1,0 +1,56 @@
+{
+  "topBar": {
+    "easyReturn": "7 రోజుల సులభ రిటర్న్",
+    "cashOnDelivery": "డెలివరీ వద్ద నగదు",
+    "lowestPrices": "తక్కువ ధరలు",
+    "becomeSupplier": "సరఫరాదారుడవ్వండి",
+    "investorRelations": "నివేశకుల సంబంధాలు"
+  },
+  "nav": {
+    "home": "హోమ్",
+    "products": "ఉత్పత్తులు",
+    "about": "మా గురించి",
+    "contact": "సంప్రదించండి",
+    "cart": "కార్టు",
+    "profile": "ప్రొఫైల్",
+    "greenBharat": "గ్రీన్ భారత్",
+    "aiAgent": "ఏఐ ఏజెంట్"
+  },
+  "search": {
+    "placeholder": "సారీ, కుర్తీ లేదా ఉత్పత్తి కోడ్ ద్వారా వెతకండి"
+  },
+  "categories": {
+    "womenethnic": "మహిళల ఎథ్నిక్",
+    "womenwestern": "మహిళల వెస్ట్రన్",
+    "men": "పురుషులు",
+    "kids": "పిల్లలు",
+    "home&kitchen": "ఇల్లు మరియు వంటగది",
+    "beauty&health": "అందం మరియు ఆరోగ్యం",
+    "jewellery&accessories": "భూషణాలు మరియు ఉపకరణాలు",
+    "bags&footwear": "బ్యాగ్స్ మరియు ఫుట్‌వేర్",
+    "electronics": "ఎలక్ట్రానిక్స్",
+    "sports&fitness": "క్రీడలు మరియు ఫిట్‌నెస్"
+  },
+  "hero": {
+    "title": "మా స్టోర్‌కు స్వాగతం",
+    "subtitle": "అద్భుతమైన ధరలపై అద్భుతమైన ఉత్పత్తులను కనుగొనండి"
+  },
+  "product": {
+    "addToCart": "కార్టులో వేసండి",
+    "price": "ధర",
+    "viewDetails": "వివరాలు చూడండి",
+    "outOfStock": "స్టాక్‌లో లేదు"
+  },
+  "cart": {
+    "title": "షాపింగ్ కార్ట్",
+    "empty": "మీ కార్ట్ ఖాళీగా ఉంది",
+    "total": "మొత్తం",
+    "checkout": "చెక్ అవుట్"
+  },
+  "common": {
+    "loading": "లోడ్ అవుతోంది...",
+    "error": "ఏదో తప్పు జరిగింది",
+    "save": "సేవ్ చేయండి",
+    "cancel": "రద్దు చేయండి"
+  }
+}
