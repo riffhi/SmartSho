@@ -38,7 +38,7 @@ Based on four core pillars, SmartSho offers a unique and powerful set of feature
 
 | Area       | Technology                                                                                                  |
 | :--------- | :---------------------------------------------------------------------------------------------------------- |
-| **Frontend** | React, TypeScript, Vite, Tailwind CSS, Lucide React, i18next, React Router                                  |
+| **Frontend** | React, TypeScript, Vite, Tailwind CSS, Lucide React, React Router                                  |
 | **Backend** | Node.js, Express.js, MongoDB, Mongoose, JWT (for Auth), bcryptjs                                            |
 | **AI/ML** | OpenRouter API (for accessing models like DeepSeek), Google Generative AI (optional)                        |
 | **Database** | MongoDB Atlas                                                                                               |
