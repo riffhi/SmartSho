@@ -49,7 +49,7 @@ const GreenBharatSection: React.FC<GreenBharatSectionProps> = ({ products, onPro
            className="flex items-center space-x-2 bg-yellow-400 hover:bg-yellow-500 text-white px-4 py-2 rounded-full shadow-md transition-colors"
 >
             <Coins className="w-5 h-5" />
-            <span className="font-semibold">GreenBits: 142</span>
+            <span className="font-semibold">GreenBits</span>
 </button>
           </div>
         </div>

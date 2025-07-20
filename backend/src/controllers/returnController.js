@@ -2,6 +2,7 @@
 // Controller for handling packaging return requests from buyers
 
 import returnService from '../services/returnService.js';
+import Return from '../models/Return.js'; // Add this import
 
 class ReturnController {
     /**
@@ -61,6 +62,78 @@ class ReturnController {
                     greenBitsEarned: returnDoc.greenBitsEarned,
                 },
             });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    /**
+     * Handles the GET /api/returns/history/:userId endpoint.
+     * Retrieves all return history for a specific user.
+     */
+    async getReturnHistory(req, res, next) {
+        try {
+            const { userId } = req.params;
+
+            if (!userId) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: 'User ID is required.' 
+                });
+            }
+
+            // Fetch all returns for the given userId, sorted by most recent first
+            const returns = await Return.find({ userId })
+                .sort({ requestTimestamp: -1 })
+                .select({
+                    _id: 1,
+                    packageId: 1,
+                    orderId: 1,
+                    status: 1,
+                    requestTimestamp: 1,
+                    pickupScheduledTimestamp: 1,
+                    collectedTimestamp: 1,
+                    recycledTimestamp: 1,
+                    greenBitsEarned: 1,
+                    pickupLocation: 1
+                });
+
+            res.status(200).json({
+                success: true,
+                message: `Found ${returns.length} return records for user.`,
+                returns: returns,
+                totalReturns: returns.length
+            });
+
+        } catch (error) {
+            console.error('Error fetching return history:', error);
+            next(error); // Pass to error middleware instead of manual error response
+        }
+    }
+
+    /**
+     * Alternative method using returnService if you prefer service layer approach
+     */
+    async getReturnHistoryViaService(req, res, next) {
+        try {
+            const { userId } = req.params;
+
+            if (!userId) {
+                return res.status(400).json({ 
+                    success: false, 
+                    message: 'User ID is required.' 
+                });
+            }
+
+            const returns = await returnService.getUserReturnHistory(userId);
+
+            res.status(200).json({
+                success: true,
+                message: `Found ${returns.length} return records for user.`,
+                returns: returns,
+                totalReturns: returns.length
+            });
+
         } catch (error) {
             next(error);
         }

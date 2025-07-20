@@ -16,27 +16,8 @@ import SellerLogin from './components/SellerLogin';
 import SellerSignup from './components/SellerSignup';
 import SellerChatbot from './components/SellerChatbot';
 import { Product } from './types';
-import MyReturnsPage from './components/MyReturnPage'; 
-
-// ✅ Dummy RewardsPage
-const RewardsPage: React.FC<{ onReturnClick: () => void }> = ({ onReturnClick }) => (
-  <div className="min-h-screen flex flex-col items-center justify-center bg-yellow-50 text-center p-8">
-    <h1 className="text-4xl font-bold text-yellow-600 mb-4">🎉 Your GreenBits Rewards</h1>
-    <p className="text-xl text-gray-700 mb-4">
-      You have <span className="font-bold text-yellow-700">142</span> GreenBits.
-    </p>
-    <p className="text-md text-gray-600 max-w-xl mb-6">
-      GreenBits are loyalty points earned by purchasing eco-friendly products.
-      Redeem them soon for exclusive discounts and special products.
-    </p>
-    <button
-      onClick={onReturnClick}
-      className="mt-4 px-6 py-2 bg-pink-600 text-white rounded-full font-semibold hover:bg-pink-700 transition"
-    >
-      📦 View My Returns
-    </button>
-  </div>
-);
+import MyReturnsPage from './components/MyReturnPage';
+import RewardsPage from './components/RewardsPage';
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -47,9 +28,9 @@ function App() {
   const [showGreenBharat, setShowGreenBharat] = useState(false);
   const [showSupplierPage, setShowSupplierPage] = useState(false);
   const [showSellerLogin, setShowSellerLogin] = useState(false);
-
   const [showSellerSignup, setShowSellerSignup] = useState(false);
   const [showRewardsPage, setShowRewardsPage] = useState(false);
+  const [showMyReturnsPage, setShowMyReturnsPage] = useState(false);
   const [isSellerLoggedIn, setIsSellerLoggedIn] = useState(false);
 
   // Check if seller is already logged in on component mount
@@ -61,9 +42,6 @@ function App() {
       setIsSellerLoggedIn(false);
     }
   }, []);
-  
-  
-  const [showMyReturnsPage, setShowMyReturnsPage] = useState(false); // ✅
 
   const filteredProducts = useMemo(() => {
     if (!selectedCategory) return products;
@@ -92,6 +70,11 @@ function App() {
   const handleSupplierClick = () => {
     resetPageStates();
     setTimeout(() => setShowSupplierPage(true), 0);
+  };
+
+  const handleMyReturnsClick = () => {
+    resetPageStates();
+    setTimeout(() => setShowMyReturnsPage(true), 0);
   };
 
   const resetPageStates = () => {
@@ -136,11 +119,6 @@ function App() {
     resetPageStates();
   };
 
-  const handleMyReturnsClick = () => {
-  setShowMyReturnsPage(true);
-  setShowRewardsPage(false);
-};
-
   return (
     <CartProvider>
       <div className="min-h-screen bg-gray-50">
@@ -150,8 +128,6 @@ function App() {
           onGreenBharatClick={handleGreenBharatClick}
           onSupplierClick={handleSupplierClick}
         />
-
-      
 
         {showSellerLogin ? (
           <SellerLogin 
@@ -168,6 +144,18 @@ function App() {
             onSellerLoginClick={() => setShowSellerLogin(true)}
             onLogout={handleSellerLogout}
           />
+        ) : showMyReturnsPage ? (
+          <>
+            <MyReturnsPage />
+            <div className="text-center py-4">
+              <button
+                onClick={resetPageStates}
+                className="text-pink-600 hover:text-pink-700 font-medium"
+              >
+                ← Back to Home
+              </button>
+            </div>
+          </>
         ) : showRewardsPage ? (
           <>
             <RewardsPage onReturnClick={handleMyReturnsClick} />
@@ -256,7 +244,7 @@ function App() {
         {isSellerLoggedIn && showSupplierPage ? (
           <SellerChatbot />
         ) : (
-          !showSupplierPage && !showSellerLogin && !showSellerSignup && !showRewardsPage && <BuyerChatbot />
+          !showSupplierPage && !showSellerLogin && !showSellerSignup && !showRewardsPage && !showMyReturnsPage && <BuyerChatbot />
         )}
       </div>
     </CartProvider>

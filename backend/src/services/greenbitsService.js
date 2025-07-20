@@ -1,23 +1,16 @@
 // smartsho-backend/src/services/greenbitsService.js
-// Business logic for GreenBits management (fetching balance, redemption)
 
 import User from '../models/User.js';
 import GreenbitsTransaction from '../models/GreenbitsTransaction.js';
-import { GREENBITS_PER_PACKAGE } from '../config/index.js'; // Use .js if it's an ES module
 
 class GreenbitsService {
-    /**
-     * Retrieves a user's current GreenBits balance and transaction history.
-     * @param {string} userId - The ID of the user.
-     * @returns {Promise<{balance: number, history: Array<GreenbitsTransaction>}>}
-     */
     async getUserGreenbits(userId) {
         const user = await User.findById(userId);
         if (!user) {
             throw new Error('User not found.');
         }
 
-        const history = await GreenbitsTransaction.find({ userId: userId }).sort({ timestamp: -1 });
+        const history = await GreenbitsTransaction.find({ userId }).sort({ timestamp: -1 });
 
         return {
             balance: user.greenBitsBalance,
@@ -25,19 +18,12 @@ class GreenbitsService {
         };
     }
 
-    /**
-     * Handles the redemption of GreenBits for a user.
-     * @param {string} userId - The ID of the user redeeming GreenBits.
-     * @param {number} amount - The amount of GreenBits to redeem.
-     * @param {string} redemptionType - E.g., 'discount', 'coupon', 'donation'.
-     * @param {string} [reference] - Optional reference (e.g., coupon code generated).
-     * @returns {Promise<Object>} Updated user balance and transaction details.
-     */
     async redeemGreenbits(userId, amount, redemptionType, reference = 'N/A') {
         if (amount <= 0) {
             throw new Error('Redemption amount must be positive.');
         }
 
+        // Check user exists and has sufficient balance
         const user = await User.findById(userId);
         if (!user) {
             throw new Error('User not found.');
@@ -47,22 +33,54 @@ class GreenbitsService {
             throw new Error('Insufficient GreenBits balance.');
         }
 
-        // Deduct GreenBits from user's balance
-        user.greenBitsBalance -= amount;
-        await user.save();
+        // Use findByIdAndUpdate to avoid validation issues
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $inc: { greenBitsBalance: -amount } },
+            { new: true, runValidators: false }
+        );
 
-        // Record the redemption transaction
         const greenbitsTransaction = new GreenbitsTransaction({
             userId: userId,
-            type: 'redeemed',
+            type: 'spent', // Changed from 'redeemed' to 'spent'
             amount: amount,
             referenceId: reference,
             description: `Redeemed ${amount} GreenBits for ${redemptionType}`,
         });
         await greenbitsTransaction.save();
 
-        // Log redemption
-        console.log(`User ${userId} redeemed ${amount} GreenBits for ${redemptionType}.`);
+        return {
+            newBalance: updatedUser.greenBitsBalance,
+            transaction: greenbitsTransaction,
+        };
+    }
+
+    // Fixed: Changed parameter order to match controller call
+    async addGreenbits(userId, amount, description) {
+        if (!userId || !amount || amount <= 0) {
+            throw new Error('Invalid input.');
+        }
+
+        // Fixed: Use findByIdAndUpdate to avoid validation issues
+        const user = await User.findByIdAndUpdate(
+            userId,
+            { $inc: { greenBitsBalance: amount } },
+            { new: true, runValidators: false } // Skip validation to avoid password requirement
+        );
+
+        if (!user) {
+            throw new Error('User not found.');
+        }
+
+        const greenbitsTransaction = new GreenbitsTransaction({
+            userId: userId,
+            type: 'earned',
+            amount: amount,
+            referenceId: description || 'N/A',
+            description: description || `Earned ${amount} GreenBits`,
+        });
+
+        await greenbitsTransaction.save();
 
         return {
             newBalance: user.greenBitsBalance,
@@ -71,6 +89,5 @@ class GreenbitsService {
     }
 }
 
-// ✅ Export as default
 const greenbitsService = new GreenbitsService();
 export default greenbitsService;

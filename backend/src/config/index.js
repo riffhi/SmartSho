@@ -2,7 +2,7 @@
 // Central configuration file (can be used for other global settings)
 
 // Change module.exports to named exports
-export const PICKUP_THRESHOLD = 50;
+export const PICKUP_THRESHOLD = 1;
 export const GREENBITS_PER_PACKAGE = 10;
 export const AREA_GRANULARITY = 'pincode';
 export const DELIVERY_PARTNER_API_URL = 'https://mock-delivery-partner.com/api';

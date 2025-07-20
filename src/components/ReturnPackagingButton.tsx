@@ -16,36 +16,43 @@ interface UserInfo {
   };
 }
 
+interface ReturnPackagingButtonProps {
+  onReturnSubmitted?: () => void;
+}
+
 const mockUser: UserInfo = {
-  userId: '60d0fe4f3b4d5a001c8e0d1d',
+  userId: '64e496b61c9b8df48ff1cb7e', // your working test userId
   pickupLocation: {
-    address: '123 Main St, Anytown',
-    pincode: '123456',
+    address: '123 Test Street, Test City',
+    pincode: '110001',
     lat: 28.6139,
     lon: 77.2090,
   },
 };
 
 const mockOrderItem: OrderItem = {
-  packageId: 'PKG_ABC_12345',
-  orderId: 'ORD_XYZ_67890',
+  packageId: 'PKG_TEST_001',
+  orderId: 'ORD_TEST_001',
   productName: 'Eco-Friendly Cleaning Kit',
 };
 
-const BACKEND_API_URL = 'http://localhost:3000/api';
+const BACKEND_API_URL = 'http://localhost:5000/api';
 
-const ReturnPackagingButton: React.FC = () => {
+const ReturnPackagingButton: React.FC<ReturnPackagingButtonProps> = ({ onReturnSubmitted }) => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
 
+  const showMessage = (success: boolean, msg: string) => {
+    setIsSuccess(success);
+    setMessage(msg);
+    setLoading(false);
+  };
+
   const handleReturnRequest = async () => {
     setLoading(true);
-    setMessage('');
-    setIsSuccess(false);
-
     try {
-      const response = await fetch(`${BACKEND_API_URL}/returns/request`, {
+      const res = await fetch(`${BACKEND_API_URL}/returns/request`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -55,26 +62,63 @@ const ReturnPackagingButton: React.FC = () => {
           pickupLocation: mockUser.pickupLocation,
         }),
       });
+      const data = await res.json();
+      showMessage(res.ok, data.message || 'Return submitted.');
+    } catch (err) {
+      showMessage(false, 'Error submitting return request.');
+    }
+  };
 
-      const data = await response.json();
+  const handleSchedule = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${BACKEND_API_URL}/admin/update-status`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packageId: mockOrderItem.packageId,
+          newStatus: 'scheduled',
+        }),
+      });
+      const data = await res.json();
+      showMessage(res.ok, data.message || 'Status updated.');
+    } catch {
+      showMessage(false, 'Error scheduling pickup.');
+    }
+  };
 
-      if (response.ok) {
-        setIsSuccess(true);
-        setMessage(data.message || 'Return request submitted successfully!');
-      } else {
-        setIsSuccess(false);
-        setMessage(data.message || 'Failed to submit return request.');
-      }
-    } catch (error: any) {
-      console.error(error);
-      setIsSuccess(false);
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        setMessage('Could not connect to backend. Make sure it is running.');
-      } else {
-        setMessage('An error occurred while submitting the request.');
-      }
-    } finally {
-      setLoading(false);
+  const handleCollect = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${BACKEND_API_URL}/admin/package-collected`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          packageId: mockOrderItem.packageId,
+          deliveryPartnerId: 'DP_001',
+          qualityVerified: true,
+          verificationNotes: 'Package looks fine',
+        }),
+      });
+      const data = await res.json();
+      showMessage(res.ok, data.message || 'Marked collected.');
+    } catch {
+      showMessage(false, 'Error marking collected.');
+    }
+  };
+
+  const handleRecycle = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${BACKEND_API_URL}/admin/package-recycled`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ packageId: mockOrderItem.packageId }),
+      });
+      const data = await res.json();
+      showMessage(res.ok, data.message || 'Marked recycled.');
+    } catch {
+      showMessage(false, 'Error marking recycled.');
     }
   };
 
@@ -87,11 +131,33 @@ const ReturnPackagingButton: React.FC = () => {
       <button
         onClick={handleReturnRequest}
         disabled={loading}
-        className={`mt-4 w-full px-4 py-2 rounded-lg font-bold text-white transition ${
-          loading ? 'bg-indigo-400' : 'bg-indigo-600 hover:bg-indigo-700'
-        }`}
+        className="mt-2 w-full px-4 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700"
       >
-        {loading ? 'Submitting...' : 'Submit Return Request'}
+        Submit Return Request
+      </button>
+
+      <button
+        onClick={handleSchedule}
+        disabled={loading}
+        className="mt-2 w-full px-4 py-2 rounded-lg bg-yellow-600 text-white font-semibold hover:bg-yellow-700"
+      >
+        Schedule Pickup (Admin)
+      </button>
+
+      <button
+        onClick={handleCollect}
+        disabled={loading}
+        className="mt-2 w-full px-4 py-2 rounded-lg bg-purple-600 text-white font-semibold hover:bg-purple-700"
+      >
+        Mark as Collected (Admin)
+      </button>
+
+      <button
+        onClick={handleRecycle}
+        disabled={loading}
+        className="mt-2 w-full px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700"
+      >
+        Mark as Recycled (Admin)
       </button>
 
       {message && (

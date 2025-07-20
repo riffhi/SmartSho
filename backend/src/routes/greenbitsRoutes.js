@@ -12,4 +12,6 @@ router.get('/:userId', greenbitsController.getUserGreenbits);
 // POST /api/greenbits/redeem - Redeem GreenBits for discounts/rewards
 router.post('/redeem', greenbitsController.redeemGreenbits);
 
+router.post('/add', greenbitsController.addGreenbits);
+
 export default router;

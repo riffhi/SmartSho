@@ -12,5 +12,7 @@ router.post('/request', returnController.requestReturn);
 // GET /api/returns/status/:id - Buyer checks status of a specific return
 router.get('/status/:id', returnController.getReturnStatus);
 
+router.get('/history/:userId', returnController.getReturnHistory);
+
 // ✅ Export the router as default
 export default router;

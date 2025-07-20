@@ -39,6 +39,28 @@ class GreenbitsController {
       next(error);
     }
   }
+
+async addGreenbits(req, res, next) {
+  try {
+    const { userId, amount, description } = req.body;
+
+    if (!userId || !amount || amount <= 0) {
+      return res.status(400).json({ success: false, message: 'Missing required fields.' });
+    }
+
+    const result = await greenbitsService.addGreenbits(userId, amount, description);
+
+    res.status(200).json({
+      success: true,
+      message: 'GreenBits added successfully.',
+      newBalance: result.newBalance,
+      transactionId: result.transaction._id,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 }
 
 const greenbitsController = new GreenbitsController();
