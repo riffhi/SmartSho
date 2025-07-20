@@ -2,27 +2,178 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Meesho E-commerce Platform</title>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" href="/vite.svg" />
+    <title>Meesho E-commerce Platform</title>
 
-  
-      
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding-top: 50px;
+      }
+
+      .google-translate-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        background: #f8f9fa;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .translate-dropdown {
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+
+      #google_translate_container {
+        display: none;
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 9999;
+        background: white;
+        border: 1px solid #ddd;
+        padding: 4px 8px;
+        border-radius: 6px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      #google_translate_container.active {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      button {
+        padding: 4px 8px;
+        margin-left: 6px;
+        cursor: pointer;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background: white;
+        font-size: 13px;
+      }
+
+      #remove-translate-btn {
+        font-size: 12px;
+        background-color: #ef4444;
+        color: white;
+        border: none;
+      }
+    </style>
   </head>
 
   <body>
-   
-   
+    <!-- Top banner -->
+    <div class="google-translate-bar" id="google_translate_banner">
+      <div>
+        <strong>Translate page:</strong>
+        <select class="translate-dropdown" id="banner_translate_element">
+          <option value="en">English</option>
+          <option value="hi">हिन्दी</option>
+          <option value="bn">বাংলা</option>
+          <option value="te">తెలుగు</option>
+          <option value="ta">தமிழ்</option>
+        </select>
+      </div>
+
+      <div>
+        <button id="show-original-btn">Show Original</button>
+        <button id="close-translate-btn">×</button>
+      </div>
     </div>
 
-   
+    <!-- Corner floating widget -->
+    <div id="google_translate_container">
+      <div id="google_translate_element"></div>
+      <button id="remove-translate-btn" title="Remove Widget">✖</button>
+    </div>
+
+    <!-- App content -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Google Translate Script -->
-    
+    <!-- Google Translate Setup -->
+    <script>
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,hi,bn,te,ta",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+          },
+          "google_translate_element"
+        );
+        waitForTranslateDropdown();
+      }
 
-    <!-- Load Google Translate -->
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+      function waitForTranslateDropdown() {
+        const googleCombo = document.querySelector(".goog-te-combo");
+        if (!googleCombo) {
+          setTimeout(waitForTranslateDropdown, 300);
+          return;
+        }
+
+        const bannerSelect = document.getElementById("banner_translate_element");
+
+        bannerSelect.addEventListener("change", () => {
+          googleCombo.value = bannerSelect.value;
+          googleCombo.dispatchEvent(new Event("change"));
+        });
+
+        googleCombo.addEventListener("change", () => {
+          bannerSelect.value = googleCombo.value || "en";
+        });
+
+        const container = document.getElementById("google_translate_container");
+        if (container) container.classList.add("active");
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("show-original-btn").addEventListener("click", () => {
+          const googleCombo = document.querySelector(".goog-te-combo");
+          if (googleCombo) {
+            googleCombo.value = "";
+            googleCombo.dispatchEvent(new Event("change"));
+            document.getElementById("banner_translate_element").value = "en";
+            setTimeout(() => {
+              if (location.hash.includes("googtrans")) {
+                location.hash = "";
+                location.reload();
+              }
+            }, 100);
+          }
+        });
+
+        document.getElementById("close-translate-btn").addEventListener("click", () => {
+          document.getElementById("google_translate_banner").remove();
+          document.getElementById("google_translate_container").classList.add("active");
+        });
+
+        document.getElementById("remove-translate-btn").addEventListener("click", () => {
+          document.getElementById("google_translate_container").remove();
+        });
+      });
+
+      function hideGoogleBanner() {
+        const iframe = document.querySelector(".goog-te-banner-frame");
+        if (iframe) iframe.style.display = "none";
+        setTimeout(hideGoogleBanner, 100);
+      }
+      hideGoogleBanner();
+    </script>
+
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   </body>
 </html>

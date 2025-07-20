@@ -34,20 +34,65 @@ Promotion Boost: ${product.promotion_effect}%
 `;
 }
 
+// 🌐 Enhanced language detection and mapping
+function getLanguageInstructions(message) {
+  const langCode = franc(message);
+  
+  const languageMap = {
+    eng: {
+      name: 'English',
+      instruction: 'Respond in English only.'
+    },
+    hin: {
+      name: 'Hindi',
+      instruction: 'Respond ONLY in Hindi using Devanagari script. Do NOT use Roman/English script. Example: "आपका उत्पाद अच्छी बिक्री कर रहा है।"'
+    },
+    mar: {
+      name: 'Marathi',
+      instruction: 'Respond ONLY in Marathi using Devanagari script. Do NOT use Roman/English script.'
+    },
+    guj: {
+      name: 'Gujarati',
+      instruction: 'Respond ONLY in Gujarati script.'
+    },
+    ben: {
+      name: 'Bengali',
+      instruction: 'Respond ONLY in Bengali script.'
+    },
+    tam: {
+      name: 'Tamil',
+      instruction: 'Respond ONLY in Tamil script.'
+    },
+    tel: {
+      name: 'Telugu',
+      instruction: 'Respond ONLY in Telugu script.'
+    },
+    kan: {
+      name: 'Kannada',
+      instruction: 'Respond ONLY in Kannada script.'
+    },
+    mal: {
+      name: 'Malayalam',
+      instruction: 'Respond ONLY in Malayalam script.'
+    },
+    und: {
+      name: 'English',
+      instruction: 'Respond in English only.'
+    }
+  };
+
+  return languageMap[langCode] || languageMap['eng'];
+}
+
 // 🔥 Main chatbot route
 app.post('/chat', async (req, res) => {
   const { message } = req.body;
   if (!message) return res.status(400).json({ reply: 'Missing user message.' });
 
-  // 🧠 Language detection
-  const langCode = franc(message);
-  const langMap = {
-    eng: 'English',
-    hin: 'Hindi',
-    mar: 'Marathi',
-    und: 'English'
-  };
-  const detectedLang = langMap[langCode] || 'English';
+  // 🧠 Enhanced language detection
+  const languageInfo = getLanguageInstructions(message);
+  
+  console.log(`🌐 Detected language: ${languageInfo.name}`);
 
   // 🔍 Match product from sales dataset
   const product = salesData.find(p =>
@@ -56,7 +101,7 @@ app.post('/chat', async (req, res) => {
 
   const productPrompt = product ? buildPrompt(product, message) : message;
 
-  // 🧾 Smart system prompt
+  // 🧾 Dynamic system prompt based on detected language
   const systemPrompt = `
 You are a smart multilingual assistant for Meesho sellers.
 
@@ -65,16 +110,15 @@ You are a smart multilingual assistant for Meesho sellers.
 - Give data-backed advice using product metrics (sales, returns, stock).
 - Suggest growth tips, sustainable packaging, and marketing ideas.
 
-🌐 Language Instructions:
-- Detect user's language.
-- For Hindi or Marathi, respond only in native Devanagari script.
-  (e.g., "नमस्ते", "आपका उत्पाद" — do NOT use Roman script like "aap").
+🌐 CRITICAL LANGUAGE INSTRUCTION:
+${languageInfo.instruction}
+
+📝 Response Guidelines:
 - Keep responses short, friendly, and clear.
+- Use bullet points or emojis for clarity when helpful.
+- Be conversational and supportive.
 
-🧪 Example Hindi:
-"आपका उत्पाद अच्छी बिक्री कर रहा है। स्टॉक भरने पर विचार करें।"
-
-Use bullet points or emojis for clarity when helpful.
+REMEMBER: You must respond in the same language the user is using. If user writes in Hindi, respond ONLY in Hindi Devanagari script.
 `;
 
   try {
@@ -85,17 +129,27 @@ Use bullet points or emojis for clarity when helpful.
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-chat-v3-0324:free', 
+        model: 'deepseek/deepseek-chat-v3-0324:free',
         messages: [
           { role: 'system', content: systemPrompt.trim() },
           { role: 'user', content: productPrompt }
-        ]
+        ],
+        temperature: 0.7,
+        max_tokens: 500
       })
     });
 
     const data = await response.json();
     const reply = data?.choices?.[0]?.message?.content ?? '⚠️ No reply from AI.';
-    res.json({ reply });
+    
+    // Log for debugging
+    console.log(`📝 User (${languageInfo.name}): ${message}`);
+    console.log(`🤖 AI Reply: ${reply.substring(0, 100)}...`);
+    
+    res.json({ 
+      reply,
+      detectedLanguage: languageInfo.name
+    });
   } catch (err) {
     console.error('❌ OpenRouter Error:', err);
     res.status(500).json({ reply: 'Error contacting OpenRouter.' });
