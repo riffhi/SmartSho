@@ -51,24 +51,6 @@
     "loading": "Cargando...",
     "error": "Algo salió mal",
     "save": "Guardar",
-    "cancel": "Cancelar",
-    "language": "Language",
-    "chooseLanguage": "Choose Language"
-  },
-  "rewardsPage": {
-    "title": "🎉 Tus Recompensas GreenBits",
-    "youHave": "Tienes",
-    "greenBits": "GreenBits.",
-    "description": "Los GreenBits son puntos de fidelidad obtenidos al comprar productos ecológicos. Canjéalos pronto por descuentos exclusivos y productos especiales.",
-    "viewReturnsButton": "📦 Ver Mis Devoluciones"
-  },
-  "backToHomeButton": "← Volver al Inicio",
-  "greenBharat": {
-    "title": "GreenBharat - Productos Ecológicos"
-  },
-  "productGrid": {
-    "categoryTitle": "Productos de {{category}}",
-    "featuredTitle": "Productos Destacados",
-    "bestSellersTitle": "Los Más Vendidos"
+    "cancel": "Cancelar"
   }
 }

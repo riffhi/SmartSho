@@ -1,74 +1,10 @@
 {
-  "topBar": {
-    "easyReturn": "7 Tage einfache Rückgabe",
-    "cashOnDelivery": "Barzahlung bei Lieferung",
-    "lowestPrices": "Niedrigste Preise",
-    "becomeSupplier": "Lieferant werden",
-    "investorRelations": "Investor Relations"
-  },
-  "nav": {
-    "home": "Startseite",
-    "products": "Produkte",
-    "about": "Über uns",
-    "contact": "Kontakt",
-    "cart": "Warenkorb",
-    "profile": "Profil",
-    "greenBharat": "Grünes Bharat",
-    "aiAgent": "KI-Agent"
-  },
-  "search": {
-    "placeholder": "Suche nach Sari, Kurti oder Produktcode"
-  },
-  "categories": {
-    "womenethnic": "Damen ethnisch",
-    "womenwestern": "Damen westlich",
-    "men": "Herren",
-    "kids": "Kinder",
-    "home&kitchen": "Haus & Küche",
-    "beauty&health": "Schönheit & Gesundheit",
-    "jewellery&accessories": "Schmuck & Accessoires",
-    "bags&footwear": "Taschen & Schuhe",
-    "electronics": "Elektronik",
-    "sports&fitness": "Sport & Fitness"
-  },
-  "hero": {
-    "title": "Willkommen in unserem Geschäft",
-    "subtitle": "Entdecken Sie tolle Produkte zu fantastischen Preisen"
-  },
   "product": {
     "addToCart": "In den Warenkorb",
-    "price": "Preis",
-    "viewDetails": "Details anzeigen",
-    "outOfStock": "Nicht auf Lager"
+    "price": "Preis"
   },
-  "cart": {
-    "title": "Warenkorb",
-    "empty": "Ihr Warenkorb ist leer",
-    "total": "Gesamt",
-    "checkout": "Zur Kasse"
-  },
-  "common": {
-    "loading": "Wird geladen...",
-    "error": "Etwas ist schief gelaufen",
-    "save": "Speichern",
-    "cancel": "Abbrechen",
-    "language": "Language",
-    "chooseLanguage": "Choose Language"
-  },
-  "rewardsPage": {
-    "title": "🎉 Ihre GreenBits Belohnungen",
-    "youHave": "Sie haben",
-    "greenBits": "GreenBits.",
-    "description": "GreenBits sind Treuepunkte, die Sie durch den Kauf umweltfreundlicher Produkte verdienen. Lösen Sie sie bald für exklusive Rabatte und spezielle Produkte ein.",
-    "viewReturnsButton": "📦 Meine Rücksendungen anzeigen"
-  },
-  "backToHomeButton": "← Zurück zur Startseite",
-  "greenBharat": {
-    "title": "GreenBharat - Umweltfreundliche Produkte"
-  },
-  "productGrid": {
-    "categoryTitle": "{{category}} Produkte",
-    "featuredTitle": "Ausgewählte Produkte",
-    "bestSellersTitle": "Bestseller"
+  "header": {
+    "home": "Startseite",
+    "categories": "Kategorien"
   }
 }

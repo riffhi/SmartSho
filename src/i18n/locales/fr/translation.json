@@ -1,74 +1,8 @@
 {
-  "topBar": {
-    "easyReturn": "Retour facile sous 7 jours",
-    "cashOnDelivery": "Paiement à la livraison",
-    "lowestPrices": "Prix les plus bas",
-    "becomeSupplier": "Devenir fournisseur",
-    "investorRelations": "Relations avec les investisseurs"
-  },
-  "nav": {
-    "home": "Accueil",
-    "products": "Produits",
-    "about": "À propos",
-    "contact": "Contact",
-    "cart": "Panier",
-    "profile": "Profil",
-    "greenBharat": "GreenBharat",
-    "aiAgent": "Agent IA"
-  },
-  "search": {
-    "placeholder": "Rechercher un sari, un kurti ou un code produit"
-  },
-  "categories": {
-    "womenethnic": "Femmes ethnique",
-    "womenwestern": "Femmes occidentale",
-    "men": "Hommes",
-    "kids": "Enfants",
-    "home&kitchen": "Maison & Cuisine",
-    "beauty&health": "Beauté & Santé",
-    "jewellery&accessories": "Bijoux & Accessoires",
-    "bags&footwear": "Sacs & Chaussures",
-    "electronics": "Électronique",
-    "sports&fitness": "Sports & Fitness"
-  },
-  "hero": {
-    "title": "Bienvenue dans notre boutique",
-    "subtitle": "Découvrez des produits incroyables à des prix avantageux"
-  },
   "product": {
     "addToCart": "Ajouter au panier",
-    "price": "Prix",
-    "viewDetails": "Voir les détails",
-    "outOfStock": "Rupture de stock"
-  },
-  "cart": {
-    "title": "Panier d'achat",
-    "empty": "Votre panier est vide",
-    "total": "Total",
-    "checkout": "Commander"
-  },
-  "common": {
-    "loading": "Chargement...",
-    "error": "Une erreur est survenue",
-    "save": "Enregistrer",
-    "cancel": "Annuler",
-    "language": "Language",
-    "chooseLanguage": "Choose Language"
-  },
-  "rewardsPage": {
-    "title": "🎉 Vos récompenses GreenBits",
-    "youHave": "Vous avez",
-    "greenBits": "GreenBits.",
-    "description": "Les GreenBits sont des points de fidélité gagnés en achetant des produits respectueux de l'environnement. Échangez-les bientôt contre des réductions exclusives et des produits spéciaux.",
-    "viewReturnsButton": "📦 Voir mes retours"
-  },
-  "backToHomeButton": "← Retour à l'accueil",
-  "greenBharat": {
-    "title": "GreenBharat - Produits Écologiques"
-  },
-  "productGrid": {
-    "categoryTitle": "Produits {{category}}",
-    "featuredTitle": "Produits phares",
-    "bestSellersTitle": "Meilleures ventes"
+    "outOfStock": "Rupture de stock",
+    "cod": "Paiement à la livraison disponible",
+    "delivery": "Livraison gratuite en {{days}} jours"
   }
 }
