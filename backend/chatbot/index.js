@@ -3,13 +3,22 @@ import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { loadCSV, salesData } from './src/utils/csvLoader.js';
+import { loadCSV, salesData } from '../src/utils/csvLoader.js';
 import { franc } from 'franc';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load env from the correct path
+dotenv.config({ path: path.join(__dirname, '.env') });
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.use(cors());
 app.use(bodyParser.json());
