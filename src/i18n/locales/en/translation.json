@@ -51,6 +51,24 @@
     "loading": "Loading...",
     "error": "Something went wrong",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "language": "Language",
+    "chooseLanguage": "Choose Language"
+  },
+  "rewardsPage": {
+    "title": "🎉 Your GreenBits Rewards",
+    "youHave": "You have",
+    "greenBits": "GreenBits.",
+    "description": "GreenBits are loyalty points earned by purchasing eco-friendly products. Redeem them soon for exclusive discounts and special products.",
+    "viewReturnsButton": "📦 View My Returns"
+  },
+  "backToHomeButton": "← Back to Home",
+  "greenBharat": {
+    "title": "GreenBharat - Eco-Friendly Products"
+  },
+  "productGrid": {
+    "categoryTitle": "{{category}} Products",
+    "featuredTitle": "Featured Products",
+    "bestSellersTitle": "Best Sellers"
   }
 }
