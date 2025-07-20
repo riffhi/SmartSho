@@ -153,5 +153,58 @@ OPENROUTER_API_KEY: Your API key from OpenRouter.ai(deepseek free model), used f
 Frontend (riffhi-smartsho/.env)
 VITE_OPENROUTER_KEY_BUYER: Your API key from OpenRouter.ai(deepseek free model), used for the buyer chatbot.
 
-
-
+#### Open source Attributes
+React 18.3.1
+License: MIT
+Role: The core library for building our user interface. 
+Source: github.com/facebook/react
+--
+Vite 5.4.2 
+License: MIT 
+Role: High-performance build tool and development server for the frontend. Source: github.com/vitejs/vite
+--
+TypeScript 5.5.3 
+License: Apache 2.0 
+Role: Provides static typing for robust and scalable code. 
+Source: github.com/microsoft/TypeScript
+--
+Tailwind CSS 3.4.1 
+License: MIT 
+Role: A utility-first CSS framework for rapid and consistent styling. 
+Source: github.com/tailwindlabs/tailwindcss
+--
+React Router 7.6.3 
+License: MIT 
+Role: Handles all client-side page navigation and routing. 
+Source: github.com/remix-run/react-router
+--
+Node.js 
+License: MIT 
+Role: The JavaScript runtime environment that executes our backend code. 
+Source: github.com/nodejs/node
+--
+Express 5.1.0 
+License: MIT 
+Role: The web application framework used to build our robust APIs. 
+Source: github.com/expressjs/express
+--
+--
+Mongoose 8.16.3 
+License: MIT 
+Role: An Object Data Modeling (ODM) library for interacting with our MongoDB database. 
+Source: github.com/Automattic/mongoose
+--
+jsonwebtoken 9.0.2 
+License: MIT 
+Role: Creates and verifies JSON Web Tokens (JWT) for secure user authentication. 
+Source: github.com/auth0/node-jsonwebtoken
+--
+bcryptjs 3.0.2 
+License: MIT 
+Role: A library to hash user passwords for secure storage in the database. 
+Source: github.com/dcodeIO/bcrypt.js
+--
+dotenv 17.2.0 
+License: BSD-2-Clause 
+Role: Manages all environment variables for secure configuration. 
+Source: github.com/motdotla/dotenv
