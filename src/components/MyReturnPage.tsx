@@ -38,11 +38,10 @@ const MyReturnsPage: React.FC = () => {
   const userId = '64bdf7e5615f4e4ec6d098a3'; // Replace with real userId when auth available
   const greenBitsUserId = '64e496b61c9b8df48ff1cb7e'; // Your GreenBits API userId
 
-
   const fetchReturnedPackages = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://smartsho-1.onrender.com/api/returns/history/${userId}`);
+      const response = await fetch(`https://smartsho-1.onrender.com/api/returns/history/${userId}`);
       if (!response.ok) throw new Error('Failed to fetch return history');
       const data = await response.json();
       
@@ -62,7 +61,7 @@ const MyReturnsPage: React.FC = () => {
   const fetchGreenBitsData = async () => {
     try {
       setGreenBitsLoading(true);
-      const response = await fetch(`http://smartsho-1.onrender.com/api/greenbits/${greenBitsUserId}`);
+      const response = await fetch(`https://smartsho-1.onrender.com/api/greenbits/${greenBitsUserId}`);
       if (!response.ok) throw new Error('Failed to fetch GreenBits data');
       const data = await response.json();
       if (data.success) {
@@ -112,7 +111,7 @@ const MyReturnsPage: React.FC = () => {
     }
 
     try {
-      const res = await fetch(`http://smartsho-1.onrender.com/api${endpoint}`, {
+      const res = await fetch(`https://smartsho-1.onrender.com/api${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
