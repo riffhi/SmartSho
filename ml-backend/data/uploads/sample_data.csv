@@ -1,0 +1,31 @@
+date,product_id,product_name,quantity_sold,price,category
+2024-06-01,P001,Cotton Kurti,10,499,Fashion
+2024-06-01,P002,Plastic Water Bottle,5,199,Home & Kitchen
+2024-06-02,P001,Cotton Kurti,8,499,Fashion
+2024-06-02,P003,Men’s Sports Shoes,12,899,Footwear
+2024-06-03,P002,Plastic Water Bottle,4,199,Home & Kitchen
+2024-06-03,P004,LED Bulb,15,99,Electronics
+2024-06-04,P001,Cotton Kurti,6,499,Fashion
+2024-06-04,P004,LED Bulb,14,99,Electronics
+2024-06-05,P003,Men’s Sports Shoes,10,899,Footwear
+2024-06-05,P002,Plastic Water Bottle,3,199,Home & Kitchen
+2024-06-06,P001,Cotton Kurti,9,499,Fashion
+2024-06-06,P004,LED Bulb,13,99,Electronics
+2024-06-07,P002,Plastic Water Bottle,7,199,Home & Kitchen
+2024-06-07,P003,Men’s Sports Shoes,11,899,Footwear
+2024-06-08,P001,Cotton Kurti,10,499,Fashion
+2024-06-08,P004,LED Bulb,16,99,Electronics
+2024-06-09,P002,Plastic Water Bottle,6,199,Home & Kitchen
+2024-06-09,P001,Cotton Kurti,7,499,Fashion
+2024-06-10,P003,Men’s Sports Shoes,13,899,Footwear
+2024-06-10,P004,LED Bulb,12,99,Electronics
+2024-06-11,P002,Plastic Water Bottle,4,199,Home & Kitchen
+2024-06-11,P001,Cotton Kurti,8,499,Fashion
+2024-06-12,P003,Men’s Sports Shoes,10,899,Footwear
+2024-06-12,P002,Plastic Water Bottle,5,199,Home & Kitchen
+2024-06-13,P001,Cotton Kurti,6,499,Fashion
+2024-06-13,P004,LED Bulb,15,99,Electronics
+2024-06-14,P003,Men’s Sports Shoes,9,899,Footwear
+2024-06-14,P002,Plastic Water Bottle,5,199,Home & Kitchen
+2024-06-15,P001,Cotton Kurti,7,499,Fashion
+2024-06-15,P004,LED Bulb,17,99,Electronics
