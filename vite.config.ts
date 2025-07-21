@@ -7,8 +7,4 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  server: {
-    host: '0.0.0.0',   // 🔧 Bind to all network interfaces
-    port: 3000         // 🔧 Or any open port you prefer (3000 is default)
-  }
 });
