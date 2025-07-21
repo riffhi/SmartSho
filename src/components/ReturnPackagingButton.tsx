@@ -36,7 +36,7 @@ const mockOrderItem: OrderItem = {
   productName: 'Eco-Friendly Cleaning Kit',
 };
 
-const BACKEND_API_URL = 'http://localhost:5000/api';
+const BACKEND_API_URL = 'https://smartsho-1.onrender.com/api';
 
 const ReturnPackagingButton: React.FC<ReturnPackagingButtonProps> = ({ onReturnSubmitted }) => {
   const [loading, setLoading] = useState(false);

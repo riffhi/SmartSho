@@ -1,6 +1,6 @@
 // Frontend service to interact with GreenBits API
 class GreenBitsService {
-  static BASE_URL = 'http://localhost:5000/api/greenbits';
+  static BASE_URL = 'https://smartsho-1.onrender.com/api/greenbits';
 
   // Get user's GreenBits balance and history
   static async getUserGreenBits(userId) {

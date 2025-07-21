@@ -17,7 +17,7 @@ const SellerLogin: React.FC<SellerLoginProps> = ({ onLoginSuccess, onSwitchToSig
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/seller-login', {
+      const response = await fetch('https://smartsho-1.onrender.com/api/auth/seller-login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

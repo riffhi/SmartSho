@@ -32,7 +32,7 @@ const SellerSignup: React.FC<SellerSignupProps> = ({ onSignupSuccess, onSwitchTo
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/seller-signup', {
+      const response = await fetch('https://smartsho-1.onrender.com/api/auth/seller-signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
